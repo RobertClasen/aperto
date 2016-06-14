@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="@string/add_new_spot_title"
+        android:textColor="#ff0000"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/category_wheel"
+        android:requiresFadingEdge="horizontal">
+    </HorizontalScrollView>
+
+    <TextView
+        android:text="@string/add_new_spot_title"
+        android:textColor="#ff0000"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="hello"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAlignment="center"
+        android:text="@string/add_new_spot_img"/>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:text="@string/add_new_spot_img_btn"/>
+
+</LinearLayout>
