@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="dark_grey">#424242</color>
+    <color name="medium_grey">#9E9E9E</color>
+    <color name="button_grey">#757575</color>
+    <color name="white_trans">#99FFFFFF</color>
+
+    <color name="colorPrimaryLight">#79F281</color>
+
+    <!--Marker colors-->
+    <color name="skateboard">#C2948A</color>
+    <color name="urban_training">#E56399</color>
+    <color name="basketball">#3DCCC7</color>
+    <color name="football">#4F7CAC</color>
+    <color name="running">#AA4465</color>
+    <color name="swimming">#B118C8</color>
+    <color name="windsurfing">#ED6A5A</color>
+</resources>
