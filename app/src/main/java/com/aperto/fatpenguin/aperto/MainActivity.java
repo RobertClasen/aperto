@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -165,6 +164,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
+        map.setPadding(0, 110, 0, 0);
+        map.getUiSettings().setCompassEnabled(false);
 
         // Setting an info window adapter allows us to change both the contents and look of the
         // info window.
@@ -202,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        map.setMyLocationEnabled(true);
 
         if (checkPermission("android.permission.ACCESS_FINE_LOCATION", 1, 0)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -213,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         LatLng currentLocation = new LatLng(lt, ln);
-        map.setMyLocationEnabled(true);
 
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(55.7849209, 12.5190433))
