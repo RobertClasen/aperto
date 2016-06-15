@@ -54,7 +54,8 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
 
         <RelativeLayout
             android:id="@+id/scroll_view"
@@ -71,7 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:focusableInTouchMode="true">
                 <ImageButton
                     android:id="@+id/favorite_button"
                     android:layout_width="wrap_content"
@@ -95,36 +97,38 @@
                     android:tint="@color/button_grey" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/description"
+            <View
+                android:id="@+id/first_separator"
                 android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_below="@id/button_bar"/>
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/button_bar"
-                android:textColor="@color/black"
-                android:text="Description"
-                android:textSize="@dimen/article_titles"/>
-                android:layout_marginBottom="@dimen/md_keylines" />
+                android:layout_below="@id/first_separator"
+                android:layout_centerHorizontal="true"
+                android:numStars="5"/>
+
+            <View
+                android:id="@+id/second_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_below="@id/rating_bar"/>
 
             <TextView
                 android:id="@+id/place_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/description"
-                tools:text="@string/detail_desc_short" />
+                android:layout_below="@id/second_separator"
+                tools:text="@string/detail_desc_short"/>
 
-            <TextView
-                android:id="@+id/gallery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/place_detail"
-                android:textColor="@color/black"
-                android:text="Gallery"
-                android:textSize="@dimen/article_titles"
-                android:layout_marginBottom="@dimen/md_keylines"
-                android:layout_marginTop="@dimen/md_keylines" />
-
-            <com.aperto.fatpenguin.aperto.GalleryView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/gallery_view"
+                android:layout_below="@id/place_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 

@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
@@ -34,11 +35,11 @@ public class DetailActivity extends AppCompatActivity {
         TextView description = (TextView) findViewById(R.id.place_detail);
         description.setText(R.string.detail_desc_short);
 
+        RecyclerView galleryView = (RecyclerView) findViewById(R.id.gallery_view);
+        galleryView.setAdapter(new GalleryAdapter(this));
 
-        GalleryView galleryView = (GalleryView) findViewById(R.id.gallery_view);
-//        galleryView.setAdapter();
+        galleryView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        getLayoutInflater().inflate(R.layout.recycler_view, null);
-        GalleryView gallery = (GalleryView) getLayoutInflater().inflate(R.layout.recycler_view, null);
+
     }
 }
