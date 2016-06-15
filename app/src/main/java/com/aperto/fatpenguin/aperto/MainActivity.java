@@ -123,6 +123,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Snackbar.make(v, "Add Marker", Snackbar.LENGTH_SHORT).show();
+                Intent addSpotIntent = new Intent(MainActivity.this, AddSpotActivity.class);
+                startActivity(addSpotIntent);
             }
         });
 

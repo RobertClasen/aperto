@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories_names">
+        <item>Skating</item>
+        <item>Urban Training</item>
+        <item>Basketball</item>
+        <item>Football</item>
+        <item>Running</item>
+        <item>Swimming</item>
+        <item>Windsurfing</item>
+    </string-array>
+
+    <array name="categories_image_links">
+        <item>@drawable/skateboard</item>
+        <item>@drawable/barbell</item>
+        <item>@drawable/basketball</item>
+        <item>@drawable/football</item>
+        <item>@drawable/running</item>
+        <item>@drawable/swimming</item>
+        <item>@drawable/windsurfing</item>
+    </array>
+
+    <array name="categories_colors">
+        <item>@color/skateboard</item>
+        <item>@color/urban_training</item>
+        <item>@color/basketball</item>
+        <item>@color/football</item>
+        <item>@color/running</item>
+        <item>@color/swimming</item>
+        <item>@color/windsurfing</item>
+    </array>
+
+
+
+
+</resources>
