@@ -17,9 +17,13 @@
 package com.aperto.fatpenguin.aperto;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -32,21 +36,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MainActivity extends AppCompatActivity
-        implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener,
-                GoogleMap.InfoWindowAdapter {
+import java.security.Permissions;
+
+public class MainActivity extends AppCompatActivity implements
+        OnMapReadyCallback,
+        GoogleMap.OnInfoWindowClickListener,
+        GoogleMap.InfoWindowAdapter,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private DrawerLayout drawerLayout;
     private GoogleMap map;
+    private GoogleApiClient googleApiClient;
+    private double lt;
+    private double ln;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +147,15 @@ public class MainActivity extends AppCompatActivity
         // Get a reference to the MapFragment from resources.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Create an instance of GoogleAPIClient.
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
     }
 
     @Override
@@ -156,24 +181,29 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
-        LatLng cph = new LatLng(55.694951, 12.567797);
-        map.addMarker(new MarkerOptions()
-            .position(cph)
-            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_deep_purple_logo)));
 
         // Setting an info window adapter allows us to change both the contents and look of the
         // info window.
         map.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
-
         map.setOnInfoWindowClickListener(this);
-        map.moveCamera(CameraUpdateFactory.newLatLng(cph));
-        map.animateCamera(CameraUpdateFactory.zoomTo(15.0f));
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent intent = new Intent(this, DetailActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        googleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        googleApiClient.disconnect();
+        super.onStop();
     }
 
     @Override
@@ -184,6 +214,44 @@ public class MainActivity extends AppCompatActivity
     @Override
     public View getInfoContents(Marker marker) {
         return null;
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        if (checkPermission("android.permission.ACCESS_FINE_LOCATION", 1, 0)
+                == PackageManager.PERMISSION_GRANTED) {
+            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            if (lastLocation != null) {
+                lt = lastLocation.getLatitude();
+                ln = lastLocation.getLongitude();
+            }
+        }
+
+        LatLng currentLocation = new LatLng(lt, ln);
+        map.setMyLocationEnabled(true);
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(55.7849209, 12.5190433))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_light_tyrkish_logo)));
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(currentLocation)
+                .zoom(15.0f)
+                .tilt(30)
+                .build();
+
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
 
