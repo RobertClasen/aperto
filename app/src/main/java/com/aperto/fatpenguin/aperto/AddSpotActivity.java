@@ -47,13 +47,8 @@ public class AddSpotActivity extends Activity {
                         currentCategory.setColorFilter(black);
                     }
                     currentCategory = img.getDrawable();
-                    int hej = 0;
-                    for (int i = 0; i< images.length(); i++){
-                        if (currentCategory == images.getDrawable(i)){
-                            hej = i;
-                        }
-                    }
-                    int c = v.getResources().obtainTypedArray(R.array.categories_colors).getColor(hej, -1);
+
+                    int c = v.getResources().obtainTypedArray(R.array.categories_colors).getColor(0, -1);
                     currentCategory.setColorFilter(c, PorterDuff.Mode.SRC_ATOP);
                     categoryPressed = true;
                 }
