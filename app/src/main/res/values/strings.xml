@@ -8,4 +8,7 @@
     <string name="add_new_spot_category">Choose category</string>
     <string name="add_new_spot_img">Picture</string>
     <string name="add_new_spot_img_btn">Add photo</string>
+
+    <string name="detail_desc_short">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 </resources>

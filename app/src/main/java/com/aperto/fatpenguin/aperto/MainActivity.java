@@ -16,6 +16,7 @@
 
 package com.aperto.fatpenguin.aperto;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -169,7 +170,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-
+        Intent intent = new Intent(this, DetailActivity.class);
+        startActivity(intent);
     }
 
     @Override
