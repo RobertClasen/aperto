@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 
 /**
@@ -36,10 +37,11 @@ public class AddSpotActivity extends Activity {
         final TypedArray images = this.getResources().obtainTypedArray(R.array.categories_image_links);
 
         for (int i = 0; i < images.length(); i++){
-            int imgID = images.getResourceId(i, -1);
+            final int imgID = images.getResourceId(i, -1);
             final ImageView img = new ImageView(this);
             img.setImageResource(imgID);
             img.setColorFilter(black);
+            final int j = i;
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -48,12 +50,12 @@ public class AddSpotActivity extends Activity {
                     }
                     currentCategory = img.getDrawable();
 
-                    int c = v.getResources().obtainTypedArray(R.array.categories_colors).getColor(0, -1);
+                    int c = v.getResources().obtainTypedArray(R.array.categories_colors).getColor(j, -1);
                     currentCategory.setColorFilter(c, PorterDuff.Mode.SRC_ATOP);
                     categoryPressed = true;
+
                 }
             });
-
             linearLayout.addView(img);
         }
 

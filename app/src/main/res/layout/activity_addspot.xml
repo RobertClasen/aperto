@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/md_keylines"
+    android:paddingRight="@dimen/md_keylines">
 
     //Headline
 
     <TextView
-        android:text="@string/add_new_spot_title"
-        android:textColor="#ff0000"
+        android:text="@string/add_new_spot_header"
+        android:textColor="@color/black"
+        android:textSize="30dp"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
     //Category Wheel
     <HorizontalScrollView
+        android:paddingTop="@dimen/md_keylines"
+        android:paddingBottom="@dimen/md_keylines"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/category_wheel"
         android:fillViewport="true"
         android:requiresFadingEdge="horizontal"
         android:fadingEdge="horizontal"
-        android:fadingEdgeLength="100dp"
+        android:fadingEdgeLength="150dp"
         android:scrollbars="none">
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,29 +34,38 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-
+    //Title
     <TextView
+        android:paddingTop="@dimen/md_keylines"
+        android:paddingBottom="@dimen/md_keylines"
         android:text="@string/add_new_spot_title"
-        android:textColor="#ff0000"
-        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/article_titles"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
     <EditText
+        android:paddingTop="@dimen/md_keylines"
+        android:paddingBottom="@dimen/md_keylines"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="hello"/>
+        android:hint="@string/add_new_spot_title_prompt"/>
 
     <TextView
+        android:paddingTop="@dimen/md_keylines"
+        android:paddingBottom="@dimen/md_keylines"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textAlignment="center"
         android:text="@string/add_new_spot_img"/>
 
-    <Button
+    <ImageButton
+        android:paddingTop="@dimen/md_keylines"
+        android:paddingBottom="@dimen/md_keylines"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
+        android:background="@drawable/ic_add_a_photo_black_24dp"
         android:text="@string/add_new_spot_img_btn"/>
 
 </LinearLayout>
