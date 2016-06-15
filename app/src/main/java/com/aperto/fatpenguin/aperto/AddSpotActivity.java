@@ -7,6 +7,8 @@ package com.aperto.fatpenguin.aperto;
 
 public class AddSpotActivity extends android.app.Activity {
 
+    //...
+
 
 
 }

@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
 
+        //addspot
         <activity android:name=".AddSpotActivity"
             android:label="Add new Spot" />
 
