@@ -22,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 
 /**
  * Created by rasmusliebst, kristianwolthers and pellerubin on 14/06/16. its a me mario
@@ -75,18 +78,46 @@ public class AddSpotActivity extends Activity {
             }
         });
 
+//        Button submitBtn = (Button) findViewById(R.id.submit_btn);
+//        submitBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            if (gotValidInput()) {
+//                Intent resultIntent = new Intent();
+//                resultIntent.putExtra(SPOT_RESULT_CODE, (Parcelable) spot);
+//                setResult(RESULT_OK, resultIntent);
+//                finish();
+//            } else {
+//                setResult(RESULT_CANCELED);
+//                Snackbar snackbar = Snackbar.make(v, "not able to submit", Snackbar.LENGTH_LONG);
+//                snackbar.show();
+//            }
+//            }
+//        });
+
         Button submitBtn = (Button) findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (gotValidInput()){
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra(SPOT_RESULT_CODE, (Parcelable) spot);
-                    setResult(RESULT_OK, resultIntent);
+                if (gotValidInput()) {
+
+                    RealmConfiguration realmConfig = new RealmConfiguration
+                            .Builder(AddSpotActivity.this)
+                            .deleteRealmIfMigrationNeeded()
+                            .build();
+                    Realm.setDefaultConfiguration(realmConfig);
+                    Realm realm = Realm.getDefaultInstance();
+
+                    realm.beginTransaction();
+                    final Spot managedSpot = realm.copyToRealm(spot);
+                    realm.commitTransaction();
+
+
+                    Snackbar snackbar = Snackbar.make(v, "Spot submitted", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                     finish();
-                }else{
-                    setResult(RESULT_CANCELED);
-                    Snackbar snackbar = Snackbar.make(v, "not able to submit", Snackbar.LENGTH_LONG);
+                } else {
+                    Snackbar snackbar = Snackbar.make(v, "Not able to submit spot", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }

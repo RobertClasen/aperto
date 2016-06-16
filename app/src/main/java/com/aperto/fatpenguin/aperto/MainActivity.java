@@ -43,6 +43,7 @@ import java.security.Permissions;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
 
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback,
@@ -142,52 +143,44 @@ public class MainActivity extends AppCompatActivity implements
         });
 
 
-        /*
         // Set behavior of the test fab
-<<<<<<< Updated upstream
-        // Set behavior of the test_fab
-=======>>>>>>> Stashed changes
         FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
         testFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Spot testSpot1 = new Spot(MainActivity.this, "Matematiktorvet", "foo bar", "basket", 3);
-//                Spot testSpot2 = new Spot("Græsplæne", "urban", 55.784820f, 12.519832f);
-//                Spot testSpot3 = new Spot("Trappen", "skating", 55.785331f, 12.518995f);
-//                Spot testSpot4 = new Spot("Fodboldbane", "football", 55.790746f, 12.521697f);
+                Spot spot = new Spot();
+                spot.setCategory(3);
+                spot.setTitle("Havdrup Nyskov");
+                spot.setDescription("Lille men hyggelig skov til en hurtig løbetur.");
+                spot.setRating(6.0f);
 
                 // Delete all spots
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        realm.delete(Spot.class);
-                    }
-                });
+//                realm.executeTransaction(new Realm.Transaction() {
+//                    @Override
+//                    public void execute(Realm realm) {
+//                        realm.delete(Spot.class);
+//                    }
+//                });
 
                 realm.beginTransaction();
-                final Spot managedSpot1 = realm.copyToRealm(testSpot1);
-//                final Spot managedSpot2 = realm.copyToRealm(testSpot2);
-//                final Spot managedSpot3 = realm.copyToRealm(testSpot3);
-//                final Spot managedSpot4 = realm.copyToRealm(testSpot4);
+                final Spot managedSpot = realm.copyToRealm(spot);
                 realm.commitTransaction();
             }
         });
-<<<<<<< Updated upstream
 
-//        // Set behavior of the test_fab_query
+        // Set behavior of the test_fab_query
         FloatingActionButton testFabQuery = (FloatingActionButton) findViewById(R.id.test_fab_query);
         testFabQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Spot spot = realm.where(Spot.class).findFirst();
-                showStatus(spot.getTitle() + ", " + spot.getDescription() + ", " + spot.getType() +
+                final RealmQuery<Spot> query = realm.where(Spot.class).equalTo("title", "Havdrup Nyskov");
+                Spot spot = query.findFirst();
+                showStatus(spot.getTitle() + ", " + spot.getDescription() + ", " + spot.getRating() +
                 ", location: " + spot.getLatitude() + "," + spot.getLongitude());
 
             }
         });
 
-=======>>>>>>> Stashed changes
-        */
 
         // Get a reference to the MapFragment from resources.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
