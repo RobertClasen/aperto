@@ -35,6 +35,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.security.Permissions;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleMap.OnInfoWindowClickListener,
@@ -124,6 +127,24 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 Intent addSpotIntent = new Intent(MainActivity.this, AddSpotActivity.class);
                 startActivity(addSpotIntent);
+            }
+        });
+
+        // Set behavior of the test fab
+        FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Spot testSpot = new Spot("Title", "Type", 55.7833772f, 12.5181856f);
+
+                RealmConfiguration realmConfig = new RealmConfiguration.Builder(MainActivity.this).build();
+                Realm.setDefaultConfiguration(realmConfig);
+
+                Realm realm = Realm.getDefaultInstance();
+
+                realm.beginTransaction();
+                final Spot managedSpot = realm.copyToRealm(testSpot);
+                realm.commitTransaction();
             }
         });
 
