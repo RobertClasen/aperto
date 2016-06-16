@@ -26,15 +26,18 @@
             android:paddingLeft="10dp"
             android:textSize="30dp"
             android:textStyle="bold"
-            android:text="Urban Training"/>
-        <TextView
-            android:id="@+id/snippet"
+            android:text="Urban Training"
+            android:layout_gravity="center" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingLeft="10dp"
-            android:paddingBottom="10dp"
-            android:textSize="20dp"
-            android:text="This is a snippet"/>
+            android:layout_below="@id/title"
+            android:layout_centerHorizontal="true"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:numStars="5"
+            android:isIndicator="true"/>
     </LinearLayout>
 </RelativeLayout>
