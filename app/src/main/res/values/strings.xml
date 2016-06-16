@@ -11,6 +11,7 @@
     <string name="add_new_spot_img">Picture</string>
     <string name="add_new_spot_img_btn">Add photo</string>
     <string name="add_new_spot_title_prompt">E.g. Fælledparken</string>
+    <string name="filter_button">Filter</string>
 
 
     <string name="detail_desc_short">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do

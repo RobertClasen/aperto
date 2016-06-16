@@ -4,8 +4,9 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/filter"
+        android:title="@string/filter_button"
+        android:icon="@drawable/ic_empty_filter_white_24dp"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>

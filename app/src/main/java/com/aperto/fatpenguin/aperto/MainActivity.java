@@ -203,8 +203,9 @@ public class MainActivity extends AppCompatActivity implements
         // Handle app bar item clicks here. The app bar will automatically handle clicks on
         // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.filter) {
             return true;
+
         } else if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
         }
@@ -274,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements
 
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(55.7849209, 12.5190433))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_light_tyrkish_logo)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_lightblue_logo_small)));
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(currentLocation)
