@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/md_keylines"
     android:paddingRight="@dimen/md_keylines"
-    android:background="@color/medium_grey"
     android:fitsSystemWindows="true">
 
     <!--Choose category-->
@@ -118,7 +117,9 @@
                 android:id="@+id/title_edit_txt"
                 android:hint="@string/add_new_spot_title_prompt"
                 android:paddingTop="@dimen/md_keylines"
-                android:paddingBottom="@dimen/md_keylines"/>
+                android:paddingBottom="@dimen/md_keylines"
+                android:backgroundTint="@color/colorPrimary_trans"
+                />
 
             <!--Description-->
             <EditText
@@ -134,6 +135,7 @@
             <ImageButton
                 android:layout_weight="1"
                 android:id="@+id/add_image"
+                android:backgroundTint="@color/colorPrimary_trans"
                 android:layout_width="100dp"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
@@ -158,10 +160,13 @@
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
         android:layout_gravity="center"
+        android:background="@color/colorPrimary_trans"
         android:text="@string/add_new_spot_submit_btn"
+        android:textSize="30dp"
+        android:textColor="@color/white"
         android:id="@+id/submit_btn"/>
 </LinearLayout>
