@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements
     private GoogleApiClient googleApiClient;
     private double lt;
     private double ln;
+
+    private Realm realm;
+    private RealmConfiguration realmConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,21 +134,42 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        // Set behavior of the test fab
+        // Set behavior of the test_fab
         FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        testFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Spot testSpot = new Spot("Title", "Type", 55.7833772f, 12.5181856f);
+                Spot testSpot1 = new Spot(MainActivity.this, "Matematiktorvet", "foo bar", "basket", 3);
+//                Spot testSpot2 = new Spot("Græsplæne", "urban", 55.784820f, 12.519832f);
+//                Spot testSpot3 = new Spot("Trappen", "skating", 55.785331f, 12.518995f);
+//                Spot testSpot4 = new Spot("Fodboldbane", "football", 55.790746f, 12.521697f);
 
-                RealmConfiguration realmConfig = new RealmConfiguration.Builder(MainActivity.this).build();
-                Realm.setDefaultConfiguration(realmConfig);
-
-                Realm realm = Realm.getDefaultInstance();
+                // Delete all spots
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(Spot.class);
+                    }
+                });
 
                 realm.beginTransaction();
-                final Spot managedSpot = realm.copyToRealm(testSpot);
+                final Spot managedSpot1 = realm.copyToRealm(testSpot1);
+//                final Spot managedSpot2 = realm.copyToRealm(testSpot2);
+//                final Spot managedSpot3 = realm.copyToRealm(testSpot3);
+//                final Spot managedSpot4 = realm.copyToRealm(testSpot4);
                 realm.commitTransaction();
+            }
+        });
+
+//        // Set behavior of the test_fab_query
+        FloatingActionButton testFabQuery = (FloatingActionButton) findViewById(R.id.test_fab_query);
+        testFabQuery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Spot spot = realm.where(Spot.class).findFirst();
+                showStatus(spot.getTitle() + ", " + spot.getDescription() + ", " + spot.getType() +
+                ", location: " + spot.getLatitude() + "," + spot.getLongitude());
+
             }
         });
 
@@ -160,6 +185,10 @@ public class MainActivity extends AppCompatActivity implements
                     .addApi(LocationServices.API)
                     .build();
         }
+
+        realmConfig = new RealmConfiguration.Builder(MainActivity.this).build();
+        Realm.setDefaultConfiguration(realmConfig);
+        realm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -213,6 +242,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
+    @Override
     public View getInfoWindow(Marker marker) {
         return null;
     }
@@ -258,6 +293,22 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    private void showStatus(String txt) {
+        TextView tv = new TextView(this);
+        tv.setText(txt);
+        drawerLayout.addView(tv);
+    }
+
+    public Location getCurrentLocation() {
+        Location currentLocation = null;
+        if (checkPermission("android.permission.ACCESS_FINE_LOCATION", 1, 0)
+                == PackageManager.PERMISSION_GRANTED) {
+            currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        }
+
+        return currentLocation;
     }
 }
 
