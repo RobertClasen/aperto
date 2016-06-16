@@ -1,6 +1,9 @@
 
 package com.aperto.fatpenguin.aperto;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -19,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements
     private GoogleApiClient googleApiClient;
     private double lt;
     private double ln;
+    private final Fragment selectorFragment = new CategorySelectorFragment();
+
 
     private Realm realm;
     private RealmConfiguration realmConfig;
@@ -195,7 +202,10 @@ public class MainActivity extends AppCompatActivity implements
                     .build();
         }
 
-        realmConfig = new RealmConfiguration.Builder(MainActivity.this).build();
+        realmConfig = new RealmConfiguration
+                .Builder(MainActivity.this)
+                .deleteRealmIfMigrationNeeded()
+                .build();
         Realm.setDefaultConfiguration(realmConfig);
         realm = Realm.getDefaultInstance();
     }
@@ -213,8 +223,11 @@ public class MainActivity extends AppCompatActivity implements
         // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.filter) {
-            return true;
-
+            if (getSupportFragmentManager().findFragmentById(selectorFragment.getId()) != null) {
+                getSupportFragmentManager().beginTransaction().remove(selectorFragment).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectorFragment).commit();
+            }
         } else if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
         }

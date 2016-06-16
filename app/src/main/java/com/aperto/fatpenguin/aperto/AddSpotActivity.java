@@ -1,7 +1,6 @@
 package com.aperto.fatpenguin.aperto;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -10,7 +9,6 @@ import android.graphics.LightingColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
@@ -19,11 +17,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RatingBar;
 
 
@@ -100,13 +96,20 @@ public class AddSpotActivity extends Activity {
 
     private boolean gotValidInput() {
         //TODO - add picture check as well
-        if (categoryPressed && editTitle != null){
+        if (categoryPressed && editTitle != null) {
+            spot = new Spot();
             spot.setCategory(categoryIndex);
             spot.setTitle(editTitle.getText().toString());
-        }else{return false;}
+        } else {
+            return false;
+        }
 
-        if (editDescription.getText() != null){spot.setDescription(editDescription.getText().toString());}
-        if (rating.getRating() != 0) {spot.setRating(rating.getRating());}
+        if (editDescription.getText() != null) {
+            spot.setDescription(editDescription.getText().toString());
+        }
+        if (rating.getRating() != 0) {
+            spot.setRating(rating.getRating());
+        }
 
         return true;
     }
