@@ -12,7 +12,7 @@ public class Spot extends RealmObject {
 
     public Spot(String title, String type, float lt, float ln) {
         this.title = title;
-        this.title = type;
+        this.type = type;
         this.lt = lt;
         this.ln = ln;
     }
