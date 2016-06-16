@@ -8,17 +8,17 @@ import io.realm.RealmObject;
 public class Spot extends RealmObject {
     private String title;
     private String description;
-    private String type;
-    private int rating;
+    private int category;
+    private float rating;
 //    private Bitmap photo;
     private double lt;
     private double ln;
 
-    public Spot(MainActivity mainActivity, String title, String description, String type,
-                int rating) {
+    public Spot(MainActivity mainActivity, String title, String description, int category,
+                float rating) {
         this.title = title;
         this.description = description;
-        this.type = type;
+        this.category = category;
         this.rating = rating;
 
         Location currentLocation = mainActivity.getCurrentLocation();
@@ -47,19 +47,19 @@ public class Spot extends RealmObject {
         this.description = description;
     }
 
-    public String getType() {
-        return type;
+    public int getCategory() {
+        return category;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCategory(int category) {
+        this.category = category;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

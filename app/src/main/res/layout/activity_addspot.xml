@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/md_keylines"
-    android:paddingRight="@dimen/md_keylines">
+    android:paddingRight="@dimen/md_keylines"
+    android:background="@color/medium_grey"
+    android:fitsSystemWindows="true">
 
-    <!--Header-->
+    <!--Choose category-->
     <TextView
-        android:text="@string/add_new_spot_header"
+        android:text="@string/add_new_spot_choose_category"
+        android:id="@+id/choose_category_header"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/article_titles"
         android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:paddingBottom="@dimen/md_keylines"
+        android:paddingTop="@dimen/md_keylines"/>
 
     <!--category wheel-->
     <HorizontalScrollView
-        android:paddingTop="@dimen/md_keylines"
-        android:paddingBottom="@dimen/md_keylines"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:id="@+id/category_wheel"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
         android:fillViewport="true"
         android:requiresFadingEdge="horizontal"
         android:fadingEdge="horizontal"
         android:fadingEdgeLength="150dp"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:paddingBottom="@dimen/md_keylines">
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
@@ -34,39 +43,125 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <!--Title-->
-    <TextView
-        android:paddingTop="@dimen/md_keylines"
-        android:paddingBottom="@dimen/md_keylines"
-        android:text="@string/add_new_spot_title"
-        android:textColor="@color/black"
-        android:textSize="@dimen/article_titles"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="0dp"
+        android:layout_weight="60"
+        >
 
-    <EditText
-        android:paddingTop="@dimen/md_keylines"
-        android:paddingBottom="@dimen/md_keylines"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/add_new_spot_title_prompt"/>
+        <!--All Titles-->
+        <LinearLayout
+            android:id="@+id/titles"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_below="@id/category_wheel"
+            android:orientation="vertical">
 
-    <TextView
-        android:paddingTop="@dimen/md_keylines"
-        android:paddingBottom="@dimen/md_keylines"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textAlignment="center"
-        android:text="@string/add_new_spot_img"/>
+            <!--Title-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/add_new_spot_title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/article_titles"
+                android:paddingTop="@dimen/md_keylines"
+                android:paddingBottom="@dimen/md_keylines"/>
 
-    <ImageButton
-        android:paddingTop="@dimen/md_keylines"
-        android:paddingBottom="@dimen/md_keylines"
-        android:id="@+id/add_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="@string/add_new_spot_description_title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/article_titles"
+                android:paddingTop="@dimen/md_keylines"
+                android:paddingBottom="@dimen/md_keylines"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/add_new_spot_add_photo_title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/article_titles"
+                android:paddingTop="@dimen/md_keylines"
+                android:paddingBottom="@dimen/md_keylines"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/add_new_spot_rating_title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/article_titles"
+                android:paddingTop="@dimen/md_keylines"
+                android:paddingBottom="@dimen/md_keylines"/>
+
+        </LinearLayout>
+
+        <!--User Inputs-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:id="@+id/user_inputs"
+            android:orientation="vertical">
+
+            <!--Title-->
+            <EditText
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/title_edit_txt"
+                android:hint="@string/add_new_spot_title_prompt"
+                android:paddingTop="@dimen/md_keylines"
+                android:paddingBottom="@dimen/md_keylines"/>
+
+            <!--Description-->
+            <EditText
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/description_edit_txt"
+                android:paddingTop="@dimen/md_keylines"
+                android:paddingBottom="@dimen/md_keylines"
+                android:hint="@string/add_new_spot_title_prompt"/>
+
+            <!--Add Image-->
+            <ImageButton
+                android:layout_weight="1"
+                android:id="@+id/add_image"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_add_a_photo_black_24dp"
+                android:paddingTop="@dimen/md_keylines"
+                android:paddingBottom="@dimen/md_keylines"/>
+
+            <!--Rating Bar-->
+            <RatingBar
+                android:layout_weight="1"
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+
+                android:numStars="5"
+                android:paddingTop="@dimen/md_keylines"
+                android:paddingBottom="@dimen/md_keylines"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="10"
         android:layout_gravity="center"
-        android:background="@drawable/ic_add_a_photo_black_24dp"
-        android:text="@string/add_new_spot_img_btn"
-        android:contentDescription="@string/add_new_spot_img_btn"/>
+        android:text="@string/add_new_spot_submit_btn"
+        android:id="@+id/submit_btn"/>
 </LinearLayout>

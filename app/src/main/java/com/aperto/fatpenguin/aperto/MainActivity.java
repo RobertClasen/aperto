@@ -134,7 +134,12 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+
+        /*
+        // Set behavior of the test fab
+<<<<<<< Updated upstream
         // Set behavior of the test_fab
+=======>>>>>>> Stashed changes
         FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
         testFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements
                 realm.commitTransaction();
             }
         });
+<<<<<<< Updated upstream
 
 //        // Set behavior of the test_fab_query
         FloatingActionButton testFabQuery = (FloatingActionButton) findViewById(R.id.test_fab_query);
@@ -172,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements
 
             }
         });
+
+=======>>>>>>> Stashed changes
+        */
 
         // Get a reference to the MapFragment from resources.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
