@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.graphics.Bitmap;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -47,6 +49,7 @@ public class AddSpotActivity extends Activity {
 
     private EditText editTitle;
     private EditText editDescription;
+    private ImageButton imgButton;
     private Uri imageFileUri;
     private RatingBar rating;
 
@@ -62,6 +65,8 @@ public class AddSpotActivity extends Activity {
         editTitle = (EditText) findViewById(R.id.title_edit_txt);
         editDescription = (EditText) findViewById(R.id.description_edit_txt);
         rating = (RatingBar) findViewById(R.id.rating_bar);
+        imgButton = (ImageButton) findViewById(R.id.add_image);
+
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.inner_category_wheel);
         final TypedArray images = this.getResources().obtainTypedArray(R.array.categories_image_links);
@@ -71,6 +76,7 @@ public class AddSpotActivity extends Activity {
         }
 
         ImageButton imageButton = (ImageButton) findViewById(R.id.add_image);
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,54 +109,7 @@ public class AddSpotActivity extends Activity {
             }
         });
 
-//        Button submitBtn = (Button) findViewById(R.id.submit_btn);
-//        submitBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (gotValidInput()) {
-//
-//                    RealmConfiguration realmConfig = new RealmConfiguration
-//                            .Builder(AddSpotActivity.this)
-//                            .deleteRealmIfMigrationNeeded()
-//                            .build();
-//                    Realm.setDefaultConfiguration(realmConfig);
-//                    Realm realm = Realm.getDefaultInstance();
-//
-//                    realm.beginTransaction();
-//                    final Spot managedSpot = realm.copyToRealm(spot);
-//                    realm.commitTransaction();
-//
-//                    Snackbar snackbar = Snackbar.make(v, "Spot submitted", Snackbar.LENGTH_LONG);
-//                    snackbar.show();
-//                    finish();
-//                } else {
-//                    Snackbar snackbar = Snackbar.make(v, "Not able to submit spot", Snackbar.LENGTH_LONG);
-//                    snackbar.show();
-//                }
-//            }
-//        });
-
     }
-
-//    private boolean gotValidInput() {
-//        //TODO - add picture check as well
-//        if (categoryPressed && editTitle != null) {
-//            spot = new Spot();
-//            spot.setCategory(categoryIndex);
-//            spot.setTitle(editTitle.getText().toString());
-//        } else {
-//            return false;
-//        }
-//
-//        if (editDescription.getText() != null) {
-//            spot.setDescription(editDescription.getText().toString());
-//        }
-//        if (rating.getRating() != 0) {
-//            spot.setRating(rating.getRating());
-//        }
-//
-//        return true;
-//    }
 
     private boolean gotValidInput() {
         //TODO - add picture check as well
@@ -187,10 +146,13 @@ public class AddSpotActivity extends Activity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE){
             switch (resultCode){
                 case RESULT_OK:
-                    imageFileUri = data.getData();
-                    if (imageFileUri != null){
-                        Log.i(TAG, "we did it reddit");
+                    try{
+                        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                        imgButton.setImageBitmap(bitmap);
+                    }catch (Exception e){
+                        System.out.print("something went wrooong");
                     }
+
                     break;
                 case RESULT_CANCELED:
                     Log.i(TAG, "image camera canceled");
