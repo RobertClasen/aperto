@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback,
@@ -168,10 +169,7 @@ public class MainActivity extends AppCompatActivity implements
         testFabQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final RealmQuery<Spot> query = realm.where(Spot.class).equalTo("title", "Parken");
-                Spot spot = query.findFirst();
-                showStatus(spot.getTitle() + ", " + spot.getDescription() + ", " + spot.getRating() +
-                ", location: " + spot.getLatitude() + "," + spot.getLongitude());
+                placeMarkers(1);
             }
         });
 
@@ -282,9 +280,9 @@ public class MainActivity extends AppCompatActivity implements
 
         LatLng currentLocation = new LatLng(lt, ln);
 
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(55.7849209, 12.5190433))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_lightblue_logo_small)));
+//        map.addMarker(new MarkerOptions()
+//                .position(new LatLng(55.7849209, 12.5190433))
+//                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_lightblue_logo_small)));
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(currentLocation)
@@ -338,6 +336,19 @@ public class MainActivity extends AppCompatActivity implements
             realm.beginTransaction();
             final Spot managedSpot = realm.copyToRealm(spot);
             realm.commitTransaction();
+        }
+
+        placeMarkers(1);
+    }
+
+    public void placeMarkers(int chosenCategory) {
+
+        map.clear();
+        RealmResults<Spot> spots = realm.where(Spot.class).equalTo("category", chosenCategory).findAll();
+        for (Spot s:spots) {
+            map.addMarker(new MarkerOptions()
+                    .position(new LatLng(s.getLatitude(), s.getLongitude()))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_lightblue_logo_small)));
         }
     }
 }

@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,11 @@ public class CategorySelectorFragment extends Fragment {
     ColorFilter black;
     private boolean categoryPressed = false;
     private Drawable currentCategory;
+    private MainActivity mainActivity;
 
+    public CategorySelectorFragment() {
+//        this.mainActivity = (MainActivity) getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,13 +60,17 @@ public class CategorySelectorFragment extends Fragment {
                 }
                 currentCategory = img.getDrawable();
 
+                Log.v("debug", "foo bar");
                 int c = v.getResources().obtainTypedArray(R.array.categories_colors).getColor(j, -1);
                 currentCategory.setColorFilter(c, PorterDuff.Mode.SRC_ATOP);
                 categoryPressed = true;
 
+                ((MainActivity)getActivity()).placeMarkers(j);
+
             }
         });
         ll.addView(img);
+
     }
 
 }
