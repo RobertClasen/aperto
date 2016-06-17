@@ -39,13 +39,15 @@ public class AddSpotActivity extends Activity {
     ColorFilter black = new LightingColorFilter(Color.BLACK, Color.BLACK);
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final String TAG = "addSpot";
-    private static final String SPOT_RESULT_CODE = "parcelable_spot";
+    private static final String SPOT_RESULT_CODE = "spot_data";
     private static Spot spot;
 
     private EditText editTitle;
     private EditText editDescription;
     private Uri imageFileUri;
     private RatingBar rating;
+
+    private String[] spotFields;
 
 
 
@@ -78,68 +80,87 @@ public class AddSpotActivity extends Activity {
             }
         });
 
-//        Button submitBtn = (Button) findViewById(R.id.submit_btn);
-//        submitBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            if (gotValidInput()) {
-//                Intent resultIntent = new Intent();
-//                resultIntent.putExtra(SPOT_RESULT_CODE, (Parcelable) spot);
-//                setResult(RESULT_OK, resultIntent);
-//                finish();
-//            } else {
-//                setResult(RESULT_CANCELED);
-//                Snackbar snackbar = Snackbar.make(v, "not able to submit", Snackbar.LENGTH_LONG);
-//                snackbar.show();
-//            }
-//            }
-//        });
-
         Button submitBtn = (Button) findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (gotValidInput()) {
-
-                    RealmConfiguration realmConfig = new RealmConfiguration
-                            .Builder(AddSpotActivity.this)
-                            .deleteRealmIfMigrationNeeded()
-                            .build();
-                    Realm.setDefaultConfiguration(realmConfig);
-                    Realm realm = Realm.getDefaultInstance();
-
-                    realm.beginTransaction();
-                    final Spot managedSpot = realm.copyToRealm(spot);
-                    realm.commitTransaction();
-
-
-                    Snackbar snackbar = Snackbar.make(v, "Spot submitted", Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(SPOT_RESULT_CODE, spotFields);
+                    setResult(RESULT_OK, resultIntent);
                     finish();
                 } else {
-                    Snackbar snackbar = Snackbar.make(v, "Not able to submit spot", Snackbar.LENGTH_LONG);
+                    setResult(RESULT_CANCELED);
+                    Snackbar snackbar = Snackbar.make(v, "not able to submit", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
         });
 
+//        Button submitBtn = (Button) findViewById(R.id.submit_btn);
+//        submitBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (gotValidInput()) {
+//
+//                    RealmConfiguration realmConfig = new RealmConfiguration
+//                            .Builder(AddSpotActivity.this)
+//                            .deleteRealmIfMigrationNeeded()
+//                            .build();
+//                    Realm.setDefaultConfiguration(realmConfig);
+//                    Realm realm = Realm.getDefaultInstance();
+//
+//                    realm.beginTransaction();
+//                    final Spot managedSpot = realm.copyToRealm(spot);
+//                    realm.commitTransaction();
+//
+//                    Snackbar snackbar = Snackbar.make(v, "Spot submitted", Snackbar.LENGTH_LONG);
+//                    snackbar.show();
+//                    finish();
+//                } else {
+//                    Snackbar snackbar = Snackbar.make(v, "Not able to submit spot", Snackbar.LENGTH_LONG);
+//                    snackbar.show();
+//                }
+//            }
+//        });
+
     }
+
+//    private boolean gotValidInput() {
+//        //TODO - add picture check as well
+//        if (categoryPressed && editTitle != null) {
+//            spot = new Spot();
+//            spot.setCategory(categoryIndex);
+//            spot.setTitle(editTitle.getText().toString());
+//        } else {
+//            return false;
+//        }
+//
+//        if (editDescription.getText() != null) {
+//            spot.setDescription(editDescription.getText().toString());
+//        }
+//        if (rating.getRating() != 0) {
+//            spot.setRating(rating.getRating());
+//        }
+//
+//        return true;
+//    }
 
     private boolean gotValidInput() {
         //TODO - add picture check as well
         if (categoryPressed && editTitle != null) {
-            spot = new Spot();
-            spot.setCategory(categoryIndex);
-            spot.setTitle(editTitle.getText().toString());
+            spotFields = new String[4];
+            spotFields[0] = Integer.toString(categoryIndex);
+            spotFields[1] = editTitle.getText().toString();
         } else {
             return false;
         }
 
         if (editDescription.getText() != null) {
-            spot.setDescription(editDescription.getText().toString());
+            spotFields[2] = editDescription.getText().toString();
         }
         if (rating.getRating() != 0) {
-            spot.setRating(rating.getRating());
+            spotFields[3] = Float.toString(rating.getRating());
         }
 
         return true;

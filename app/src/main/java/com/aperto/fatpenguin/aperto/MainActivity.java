@@ -1,15 +1,13 @@
 
 package com.aperto.fatpenguin.aperto;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -23,7 +21,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -38,8 +35,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.security.Permissions;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -59,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements
     private double ln;
     private final Fragment selectorFragment = new CategorySelectorFragment();
 
+    private static final int REQUEST_NEW_SPOT = 0;
 
     private Realm realm;
     private RealmConfiguration realmConfig;
@@ -138,33 +134,32 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 Intent addSpotIntent = new Intent(MainActivity.this, AddSpotActivity.class);
-                startActivity(addSpotIntent);
+                startActivityForResult(addSpotIntent, REQUEST_NEW_SPOT);
             }
         });
-
 
         // Set behavior of the test fab
         FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
         testFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Spot spot = new Spot();
-                spot.setCategory(3);
-                spot.setTitle("Havdrup Nyskov");
-                spot.setDescription("Lille men hyggelig skov til en hurtig løbetur.");
-                spot.setRating(6.0f);
+//                Spot spot = new Spot();
+//                spot.setCategory(3);
+//                spot.setTitle("Havdrup Nyskov");
+//                spot.setDescription("Lille men hyggelig skov til en hurtig løbetur.");
+//                spot.setRating(6.0f);
 
                 // Delete all spots
-//                realm.executeTransaction(new Realm.Transaction() {
-//                    @Override
-//                    public void execute(Realm realm) {
-//                        realm.delete(Spot.class);
-//                    }
-//                });
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(Spot.class);
+                    }
+                });
 
-                realm.beginTransaction();
-                final Spot managedSpot = realm.copyToRealm(spot);
-                realm.commitTransaction();
+//                realm.beginTransaction();
+//                final Spot managedSpot = realm.copyToRealm(spot);
+//                realm.commitTransaction();
             }
         });
 
@@ -173,11 +168,10 @@ public class MainActivity extends AppCompatActivity implements
         testFabQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final RealmQuery<Spot> query = realm.where(Spot.class).equalTo("title", "Havdrup Nyskov");
+                final RealmQuery<Spot> query = realm.where(Spot.class).equalTo("title", "Parken");
                 Spot spot = query.findFirst();
                 showStatus(spot.getTitle() + ", " + spot.getDescription() + ", " + spot.getRating() +
                 ", location: " + spot.getLatitude() + "," + spot.getLongitude());
-
             }
         });
 
@@ -325,6 +319,26 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         return currentLocation;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_NEW_SPOT && resultCode == RESULT_OK) {
+            String[] spotData = data.getStringArrayExtra("spot_data");
+
+            Spot spot = new Spot();
+            spot.setCategory(Integer.valueOf(spotData[0]));
+            spot.setTitle(spotData[1]);
+            spot.setDescription(spotData[2]);
+            spot.setRating(Float.valueOf(spotData[3]));
+            spot.setLatitude(lt);
+            spot.setLongitude(ln);
+
+
+            realm.beginTransaction();
+            final Spot managedSpot = realm.copyToRealm(spot);
+            realm.commitTransaction();
+        }
     }
 }
 

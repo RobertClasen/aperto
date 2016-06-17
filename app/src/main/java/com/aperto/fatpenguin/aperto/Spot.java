@@ -14,18 +14,18 @@ public class Spot extends RealmObject {
     private double lt;
     private double ln;
 
-    public Spot(MainActivity mainActivity, String title, String description, int category,
-                float rating) {
-        this.title = title;
-        this.description = description;
-        this.category = category;
-        this.rating = rating;
-
-        Location currentLocation = mainActivity.getCurrentLocation();
-
-        this.lt = currentLocation.getLatitude();
-        this.ln = currentLocation.getLongitude();
-    }
+//    public Spot(MainActivity mainActivity, String title, String description, int category,
+//                float rating) {
+//        this.title = title;
+//        this.description = description;
+//        this.category = category;
+//        this.rating = rating;
+//
+//        Location currentLocation = mainActivity.getCurrentLocation();
+//
+//        this.lt = currentLocation.getLatitude();
+//        this.ln = currentLocation.getLongitude();
+//    }
 
     public Spot() {
 
@@ -65,6 +65,14 @@ public class Spot extends RealmObject {
 
     public double getLatitude() {
         return lt;
+    }
+
+    public void setLatitude(double lt) {
+        this.lt = lt;
+    }
+
+    public void setLongitude(double ln) {
+        this.ln = ln;
     }
 
     public double getLongitude() {
