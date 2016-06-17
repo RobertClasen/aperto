@@ -12,7 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -79,6 +81,9 @@ public class AddSpotActivity extends Activity {
                  // start the image capture Intent
                 startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             }
+
+
+
         });
 
         Button submitBtn = (Button) findViewById(R.id.submit_btn);
