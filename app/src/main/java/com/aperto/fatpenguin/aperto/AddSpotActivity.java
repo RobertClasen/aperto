@@ -38,6 +38,7 @@ public class AddSpotActivity extends Activity {
     private Drawable currentCategory;
     ColorFilter black = new LightingColorFilter(Color.BLACK, Color.BLACK);
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int TAKE_PICTURE = 1;
     private static final String TAG = "addSpot";
     private static final String SPOT_RESULT_CODE = "spot_data";
     private static Spot spot;
@@ -177,10 +178,14 @@ public class AddSpotActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE){
             switch (resultCode){
                 case RESULT_OK:
                     imageFileUri = data.getData();
+                    if (imageFileUri != null){
+                        Log.i(TAG, "we did it reddit");
+                    }
                     break;
                 case RESULT_CANCELED:
                     Log.i(TAG, "image camera canceled");
