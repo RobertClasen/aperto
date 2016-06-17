@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -129,7 +134,8 @@
                 android:id="@+id/description_edit_txt"
                 android:paddingTop="@dimen/md_keylines"
                 android:paddingBottom="@dimen/md_keylines"
-                android:hint="@string/add_new_spot_title_prompt"/>
+                android:hint="@string/add_new_spot_title_prompt"
+                android:backgroundTint="@color/colorPrimary_trans"/>
 
             <!--Add Image-->
             <ImageButton
@@ -168,5 +174,8 @@
         android:text="@string/add_new_spot_submit_btn"
         android:textSize="30dp"
         android:textColor="@color/white"
-        android:id="@+id/submit_btn"/>
+        android:id="@+id/submit_btn"
+        android:textAllCaps="false"/>
+
 </LinearLayout>
+</ScrollView>
