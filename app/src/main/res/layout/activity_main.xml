@@ -37,12 +37,13 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-            <FrameLayout
-                android:id="@+id/fragment_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         </android.support.design.widget.AppBarLayout>
+
 
         <fragment
             xmlns:map="http://schemas.android.com/apk/res-auto"

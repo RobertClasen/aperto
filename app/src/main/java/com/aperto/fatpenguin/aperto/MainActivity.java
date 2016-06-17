@@ -12,12 +12,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements
     private GoogleApiClient googleApiClient;
     private double lt;
     private double ln;
-    private final Fragment selectorFragment = new CategorySelectorFragment();
+    private Fragment selectorFragment;
+    private boolean filterIsVisible;
 
     private static final int REQUEST_NEW_SPOT = 0;
 
@@ -64,6 +65,11 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState == null) {
+            selectorFragment = new CategorySelectorFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectorFragment).commit();
+        }
 
         // Adding Toolbar to Main screen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -208,11 +214,23 @@ public class MainActivity extends AppCompatActivity implements
         // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.filter) {
-            if (getSupportFragmentManager().findFragmentById(selectorFragment.getId()) != null) {
-                getSupportFragmentManager().beginTransaction().remove(selectorFragment).commit();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if (filterIsVisible) {
+                ft.hide(selectorFragment);
+                ft.commit();
+                filterIsVisible = false;
             } else {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectorFragment).commit();
+                ft.show(selectorFragment);
+                ft.commit();
+                filterIsVisible = true;
             }
+
+
+//            if (getSupportFragmentManager().findFragmentById(selectorFragment.getId()) != null) {
+//                getSupportFragmentManager().beginTransaction().remove(selectorFragment).commit();
+//            } else {
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectorFragment).commit();
+//            }
         } else if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
         }
@@ -346,9 +364,12 @@ public class MainActivity extends AppCompatActivity implements
         map.clear();
         RealmResults<Spot> spots = realm.where(Spot.class).equalTo("category", chosenCategory).findAll();
         for (Spot s:spots) {
+
+            int categoriId = getResources().obtainTypedArray(R.array.categories_markers).getResourceId(chosenCategory, -1);
+
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(s.getLatitude(), s.getLongitude()))
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_lightblue_logo_small)));
+                    .icon(BitmapDescriptorFactory.fromResource(categoriId)));
         }
     }
 }

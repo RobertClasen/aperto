@@ -30,6 +30,26 @@
         <item>@color/windsurfing</item>
     </array>
 
+    <array name="categories_filters">
+        <item>@drawable/skateboard_small</item>
+        <item>@drawable/barbell_small</item>
+        <item>@drawable/basketball_small</item>
+        <item>@drawable/football_small</item>
+        <item>@drawable/running_small</item>
+        <item>@drawable/swimming_small</item>
+        <item>@drawable/windsurfing_small</item>
+    </array>
+
+    <array name="categories_markers">
+        <item>@drawable/marker_light_brown_logo</item>
+        <item>@drawable/marker_bright_purple_logo</item>
+        <item>@drawable/marker_light_tyrkish_logo</item>
+        <item>@drawable/marker_dark_blue_logo</item>
+        <item>@drawable/marker_dark_purple_logo</item>
+        <item>@drawable/marker_deep_purple_logo</item>
+        <item>@drawable/marker_orange_logo</item>
+    </array>
+
 
 
 
