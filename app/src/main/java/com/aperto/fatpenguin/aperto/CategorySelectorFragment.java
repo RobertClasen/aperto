@@ -17,12 +17,14 @@ import android.widget.LinearLayout;
 public class CategorySelectorFragment extends Fragment {
     private ColorFilter white;
     private TypedArray categoryIcons;
+    private boolean[] filter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         white = new LightingColorFilter(Color.WHITE, Color.WHITE);
         categoryIcons = getResources().obtainTypedArray(R.array.categories_filters);
+        filter = new boolean[categoryIcons.length()];
     }
 
     @Override
@@ -46,6 +48,7 @@ public class CategorySelectorFragment extends Fragment {
         final int imgID = images.getResourceId(index, -1);
         final ImageButton imgBtn = (ImageButton) getActivity().getLayoutInflater().inflate(R.layout.my_image_button,ll,false);
         imgBtn.setImageResource(imgID);
+        imgBtn.setId(index);
         imgBtn.setColorFilter(white);
         final int j = index;
 
@@ -55,11 +58,13 @@ public class CategorySelectorFragment extends Fragment {
                 if (imgBtn.getColorFilter().equals(white)) {
                     int c = v.getResources().obtainTypedArray(R.array.categories_colors).getColor(j, -1);
                     imgBtn.setColorFilter(c, PorterDuff.Mode.SRC_ATOP);
+                    filter[v.getId()] = true;
                 } else {
                     imgBtn.setColorFilter(white);
+                    filter[v.getId()] = false;
                 }
 
-                ((MainActivity)getActivity()).placeMarkers(j);
+                ((MainActivity)getActivity()).placeMarkers(filter);
 
             }
         });

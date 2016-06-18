@@ -11,9 +11,6 @@
         android:layout_height="50dp"
         android:id="@+id/category_wheel"
         android:fillViewport="true"
-        android:requiresFadingEdge="horizontal"
-        android:fadingEdge="horizontal"
-        android:fadingEdgeLength="150dp"
         android:background="?attr/colorPrimaryDark"
         android:scrollbars="none">
 
@@ -23,7 +20,8 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimaryDark"/>
+            android:background="?attr/colorPrimaryDark">
+        </LinearLayout>
 
     </HorizontalScrollView>
 </FrameLayout>

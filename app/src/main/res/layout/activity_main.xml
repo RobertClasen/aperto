@@ -46,7 +46,6 @@
 
 
         <fragment
-            xmlns:map="http://schemas.android.com/apk/res-auto"
             android:name="com.google.android.gms.maps.MapFragment"
             android:id="@+id/map"
             android:layout_width="match_parent"
@@ -61,17 +60,17 @@
             android:layout_marginBottom="@dimen/md_keylines"
             android:src="@drawable/ic_add_white_24"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/test_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|bottom"/>
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/test_fab"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="left|bottom"/>-->
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/test_fab_query"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"/>
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/test_fab_query"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right|bottom"/>-->
 
     </android.support.design.widget.CoordinatorLayout>
 

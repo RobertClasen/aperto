@@ -38,7 +38,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements
     private double lt;
     private double ln;
     private Fragment selectorFragment;
-    private boolean filterIsVisible;
+    private boolean selectorIsVisible;
 
     private static final int REQUEST_NEW_SPOT = 0;
 
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements
         if (savedInstanceState == null) {
             selectorFragment = new CategorySelectorFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectorFragment).commit();
+            selectorIsVisible = true;
         }
 
         // Adding Toolbar to Main screen
@@ -146,10 +146,10 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         // Set behavior of the test fab
-        FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
-        testFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
+//        testFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 //                Spot spot = new Spot();
 //                spot.setCategory(3);
 //                spot.setTitle("Havdrup Nyskov");
@@ -157,27 +157,27 @@ public class MainActivity extends AppCompatActivity implements
 //                spot.setRating(6.0f);
 
                 // Delete all spots
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        realm.delete(Spot.class);
-                    }
-                });
+//                realm.executeTransaction(new Realm.Transaction() {
+//                    @Override
+//                    public void execute(Realm realm) {
+//                        realm.delete(Spot.class);
+//                    }
+//                });
 
 //                realm.beginTransaction();
 //                final Spot managedSpot = realm.copyToRealm(spot);
 //                realm.commitTransaction();
-            }
-        });
+//            }
+//        });
 
         // Set behavior of the test_fab_query
-        FloatingActionButton testFabQuery = (FloatingActionButton) findViewById(R.id.test_fab_query);
-        testFabQuery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                placeMarkers(1);
-            }
-        });
+//        FloatingActionButton testFabQuery = (FloatingActionButton) findViewById(R.id.test_fab_query);
+//        testFabQuery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                placeMarkers(1);
+//            }
+//        });
 
 
         // Get a reference to the MapFragment from resources.
@@ -215,22 +215,16 @@ public class MainActivity extends AppCompatActivity implements
         int id = item.getItemId();
         if (id == R.id.filter) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            if (filterIsVisible) {
+            if (selectorIsVisible) {
                 ft.hide(selectorFragment);
                 ft.commit();
-                filterIsVisible = false;
+                selectorIsVisible = false;
             } else {
                 ft.show(selectorFragment);
                 ft.commit();
-                filterIsVisible = true;
+                selectorIsVisible = true;
             }
 
-
-//            if (getSupportFragmentManager().findFragmentById(selectorFragment.getId()) != null) {
-//                getSupportFragmentManager().beginTransaction().remove(selectorFragment).commit();
-//            } else {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectorFragment).commit();
-//            }
         } else if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
         }
@@ -298,10 +292,6 @@ public class MainActivity extends AppCompatActivity implements
 
         LatLng currentLocation = new LatLng(lt, ln);
 
-//        map.addMarker(new MarkerOptions()
-//                .position(new LatLng(55.7849209, 12.5190433))
-//                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_lightblue_logo_small)));
-
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(currentLocation)
                 .zoom(15.0f)
@@ -356,21 +346,28 @@ public class MainActivity extends AppCompatActivity implements
             realm.commitTransaction();
         }
 
-        placeMarkers(1);
+//        placeMarkers(1);
     }
 
-    public void placeMarkers(int chosenCategory) {
+    public void placeMarkers(boolean[] chosenCategories) {
 
         map.clear();
-        RealmResults<Spot> spots = realm.where(Spot.class).equalTo("category", chosenCategory).findAll();
-        for (Spot s:spots) {
 
-            int categoriId = getResources().obtainTypedArray(R.array.categories_markers).getResourceId(chosenCategory, -1);
+        for (int i = 0; i < chosenCategories.length; i++) {
+            if (chosenCategories[i]) {
+                RealmResults<Spot> spots = realm.where(Spot.class)
+                        .equalTo("category", i).findAll();
+                for (Spot s : spots) {
+                    int categoryId = getResources().obtainTypedArray(R.array.categories_markers)
+                            .getResourceId(i, -1);
 
-            map.addMarker(new MarkerOptions()
-                    .position(new LatLng(s.getLatitude(), s.getLongitude()))
-                    .icon(BitmapDescriptorFactory.fromResource(categoriId)));
+                    map.addMarker(new MarkerOptions()
+                            .position(new LatLng(s.getLatitude(), s.getLongitude()))
+                            .icon(BitmapDescriptorFactory.fromResource(categoryId)));
+                }
+            }
         }
+
     }
 
 }
