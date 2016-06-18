@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements
         // Adding menu icon to Toolbar
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
-            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24);
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -372,5 +372,6 @@ public class MainActivity extends AppCompatActivity implements
                     .icon(BitmapDescriptorFactory.fromResource(categoriId)));
         }
     }
+
 }
 

@@ -31,13 +31,13 @@
     </array>
 
     <array name="categories_filters">
-        <item>@drawable/skateboard_small</item>
-        <item>@drawable/barbell_small</item>
-        <item>@drawable/basketball_small</item>
-        <item>@drawable/football_small</item>
-        <item>@drawable/running_small</item>
-        <item>@drawable/swimming_small</item>
-        <item>@drawable/windsurfing_small</item>
+        <item>@drawable/ic_skating_24</item>
+        <item>@drawable/ic_barbell_24</item>
+        <item>@drawable/ic_basket_24</item>
+        <item>@drawable/ic_football_24</item>
+        <item>@drawable/ic_running_24</item>
+        <item>@drawable/ic_swimming_24</item>
+        <item>@drawable/ic_windsurfing_24</item>
     </array>
 
     <array name="categories_markers">
