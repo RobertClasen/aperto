@@ -1,6 +1,7 @@
 package com.aperto.fatpenguin.aperto;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+
+import java.io.ByteArrayInputStream;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -67,7 +70,9 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         Spot spot = spots.get(0);
 
-//        image.setBackground(spot.getThumbnail());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(spot.getThumbnail());
+
+        image.setBackground(Drawable.createFromStream(inputStream, "image"));
         title.setText(spot.getTitle());
         rating.setRating(spot.getRating());
 

@@ -3,7 +3,6 @@ package com.aperto.fatpenguin.aperto;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
@@ -12,9 +11,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.graphics.Bitmap;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -42,15 +49,17 @@ public class AddSpotActivity extends Activity {
     private static final String TAG = "addSpot";
     private static final String SPOT_RESULT_CODE = "spot_data";
     private static final String SPOT_THUMBNAIL_CODE = "spot_thumbnail";
+    private static final int REQUEST_TAKE_PHOTO = 9;
     private static Spot spot;
 
     private EditText editTitle;
     private EditText editDescription;
     private ImageButton imgButton;
-    private Uri imageFileUri;
+    private Uri photoUri;
     private RatingBar rating;
     private CollapsingToolbarLayout topToolLayout;
 
+    private String currentPhotoPath;
     private String[] spotFields;
     private byte[] thumbnail;
 
@@ -81,11 +90,31 @@ public class AddSpotActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                 // create Intent to take a picture and return control to the calling application
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                 // create Intent to take a picture and return control to the calling application
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//                 // start the image capture Intent
+//                startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
-                 // start the image capture Intent
-                startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                // Ensure that there's a camera activity to handle the intent
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        photoUri = FileProvider.getUriForFile(AddSpotActivity.this,
+                                "com.aperto.fatpenguin.aperto.fileprovider", photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                        startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                    }
+                }
+
             }
 
 
@@ -144,13 +173,21 @@ public class AddSpotActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE){
+        if (requestCode == REQUEST_TAKE_PHOTO){
             switch (resultCode){
                 case RESULT_OK:
-                    try{
-                        Bundle extras = data.getExtras();
-                        Bitmap imageBitmap = (Bitmap) extras.get("data");
-                        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), imageBitmap);
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
+//                        Bundle extras = data.getExtras();
+//                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+
+
+
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        thumbnail = stream.toByteArray();
+
                         imgButton.setVisibility(View.GONE);
                         topToolLayout.setBackground(bitmapDrawable);
                     }catch (Exception e){
@@ -188,5 +225,21 @@ public class AddSpotActivity extends Activity {
             }
         });
         ll.addView(img);
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 }
