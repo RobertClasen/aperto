@@ -302,30 +302,26 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onConnectionSuspended(int i) {
-
-    }
+    public void onConnectionSuspended(int i) { }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) { }
 
-    }
+//    private void showStatus(String txt) {
+//        TextView tv = new TextView(this);
+//        tv.setText(txt);
+//        drawerLayout.addView(tv);
+//    }
 
-    private void showStatus(String txt) {
-        TextView tv = new TextView(this);
-        tv.setText(txt);
-        drawerLayout.addView(tv);
-    }
-
-    public Location getCurrentLocation() {
-        Location currentLocation = null;
-        if (checkPermission("android.permission.ACCESS_FINE_LOCATION", 1, 0)
-                == PackageManager.PERMISSION_GRANTED) {
-            currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        }
-
-        return currentLocation;
-    }
+//    public Location getCurrentLocation() {
+//        Location currentLocation = null;
+//        if (checkPermission("android.permission.ACCESS_FINE_LOCATION", 1, 0)
+//                == PackageManager.PERMISSION_GRANTED) {
+//            currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+//        }
+//
+//        return currentLocation;
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -363,7 +359,9 @@ public class MainActivity extends AppCompatActivity implements
 
                     map.addMarker(new MarkerOptions()
                             .position(new LatLng(s.getLatitude(), s.getLongitude()))
-                            .icon(BitmapDescriptorFactory.fromResource(categoryId)));
+                            .icon(BitmapDescriptorFactory.fromResource(categoryId)))
+                            .setTitle(s.getTitle());
+
                 }
             }
         }

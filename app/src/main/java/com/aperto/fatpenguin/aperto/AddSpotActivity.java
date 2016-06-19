@@ -7,15 +7,11 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.graphics.Bitmap;
-
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 
 /**
@@ -64,7 +57,7 @@ public class AddSpotActivity extends Activity {
 
         editTitle = (EditText) findViewById(R.id.title_edit_txt);
         editDescription = (EditText) findViewById(R.id.description_edit_txt);
-        rating = (RatingBar) findViewById(R.id.rating_bar);
+        rating = (RatingBar) findViewById(R.id.info_window_rating_bar);
         imgButton = (ImageButton) findViewById(R.id.add_image);
 
 
