@@ -2,6 +2,7 @@
 package com.aperto.fatpenguin.aperto;
 
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import java.io.ByteArrayInputStream;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -55,9 +58,11 @@ public class DetailActivity extends AppCompatActivity {
 
         collapsingToolbar.setTitle(spot.getTitle());
 
-        Resources resources = getResources();
-        ImageView placePicutre = (ImageView) findViewById(R.id.info_window_image);
-        placePicutre.setImageDrawable(resources.getDrawable(R.drawable.urban));
+        image = (ImageView) findViewById(R.id.info_window_image);
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(spot.getThumbnail());
+//        image.setBackground(Drawable.createFromStream(inputStream, "image"));
+        image.setImageDrawable(Drawable.createFromStream(inputStream, "image"));
 
         ratingBar = (RatingBar) findViewById(R.id.detail_view_rating_bar);
         ratingBar.setRating(spot.getRating());

@@ -147,29 +147,29 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         // Set behavior of the test fab
-//        FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
-//        testFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
+        testFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                Spot spot = new Spot();
 //                spot.setCategory(3);
 //                spot.setTitle("Havdrup Nyskov");
 //                spot.setDescription("Lille men hyggelig skov til en hurtig løbetur.");
 //                spot.setRating(6.0f);
 
-                // Delete all spots
-//                realm.executeTransaction(new Realm.Transaction() {
-//                    @Override
-//                    public void execute(Realm realm) {
-//                        realm.delete(Spot.class);
-//                    }
-//                });
+//                 Delete all spots
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.delete(Spot.class);
+                    }
+                });
 
 //                realm.beginTransaction();
 //                final Spot managedSpot = realm.copyToRealm(spot);
 //                realm.commitTransaction();
-//            }
-//        });
+            }
+        });
 
         // Set behavior of the test_fab_query
 //        FloatingActionButton testFabQuery = (FloatingActionButton) findViewById(R.id.test_fab_query);

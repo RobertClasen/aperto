@@ -10,8 +10,7 @@
         android:id="@+id/info_window_image"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/urban"/>
+        android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:layout_width="250dp"
