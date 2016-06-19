@@ -10,6 +10,7 @@ public class Spot extends RealmObject {
     private byte[] thumbnail;
     private double lt;
     private double ln;
+    private boolean favorite;
 
 
     public String getTitle() {
@@ -67,4 +68,9 @@ public class Spot extends RealmObject {
     public void setThumbnail(byte[] thumbnail) {
         this.thumbnail = thumbnail;
     }
+
+    public void setFavorite(boolean b){this.favorite = b;}
+
+    public boolean getFavorite(){return favorite;}
+
 }

@@ -159,10 +159,10 @@ public class AddSpotActivity extends Activity {
 
                     break;
                 case RESULT_CANCELED:
-                    Log.i(TAG, "image camera canceled");
+                    Log.i(TAG, "Image camera cancelled");
                     break;
                 default:
-                    Log.i(TAG, "image camera failed!");
+                    Log.i(TAG, "Image camera failed!");
             }
         }
     }

@@ -94,45 +94,25 @@ public class MainActivity extends AppCompatActivity implements
                 // This method will trigger on item Click of navigation menu
                 @Override
                 public boolean onNavigationItemSelected(MenuItem menuItem) {
-                    // Set item in checked state
-                    menuItem.setChecked(true);
+
+                    int menuId = menuItem.getItemId();
+
                     // TODO: handle navigation
                     // Closing drawer on item click
+                    switch (menuItem.getItemId()) {
+                        case R.id.drawer_favorite:
+                            Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
+                            MainActivity.this.startActivity(intent);
+                            break;
+                        case R.id.drawer_settings:
+                            break;
+                    }
+
                     drawerLayout.closeDrawers();
                     return true;
                 }
             }
         );
-
-        // Set colors of icons in drawer.
-        navigationView.getMenu()
-                .findItem(R.id.skateboard)
-                .getIcon()
-                .setColorFilter(Color.parseColor("#C2948A"), PorterDuff.Mode.SRC_ATOP);
-        navigationView.getMenu()
-                .findItem(R.id.urban_training)
-                .getIcon()
-                .setColorFilter(Color.parseColor("#E56399"), PorterDuff.Mode.SRC_ATOP);
-        navigationView.getMenu()
-                .findItem(R.id.basketball)
-                .getIcon()
-                .setColorFilter(Color.parseColor("#3DCCC7"), PorterDuff.Mode.SRC_ATOP);
-        navigationView.getMenu()
-                .findItem(R.id.football)
-                .getIcon()
-                .setColorFilter(Color.parseColor("#4F7CAC"), PorterDuff.Mode.SRC_ATOP);
-        navigationView.getMenu()
-                .findItem(R.id.running)
-                .getIcon()
-                .setColorFilter(Color.parseColor("#AA4465"), PorterDuff.Mode.SRC_ATOP);
-        navigationView.getMenu()
-                .findItem(R.id.swimming)
-                .getIcon()
-                .setColorFilter(Color.parseColor("#B118C8"), PorterDuff.Mode.SRC_ATOP);
-        navigationView.getMenu()
-                .findItem(R.id.windsurfing)
-                .getIcon()
-                .setColorFilter(Color.parseColor("#ED6A5A"), PorterDuff.Mode.SRC_ATOP);
 
 
 

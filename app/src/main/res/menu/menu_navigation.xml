@@ -3,33 +3,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/skateboard"
-            android:icon="@drawable/skateboard"
-            android:title="Skating"/>
+            android:id="@+id/drawer_favorite"
+            android:icon="@drawable/ic_favorite_border_black_24dp"
+            android:title="Favorite"/>
         <item
-            android:id="@+id/urban_training"
-            android:icon="@drawable/barbell"
-            android:title="Urban Training"/>
-        <item
-            android:id="@+id/basketball"
-            android:icon="@drawable/basketball"
-            android:title="Basketball"/>
-        <item
-            android:id="@+id/football"
-            android:icon="@drawable/football"
-            android:title="Football"/>
-        <item
-            android:id="@+id/running"
-            android:icon="@drawable/running"
-            android:title="Running"/>
-        <item
-            android:id="@+id/swimming"
-            android:icon="@drawable/swimming"
-            android:title="Swimming"/>
-        <item
-            android:id="@+id/windsurfing"
-            android:icon="@drawable/windsurfing"
-            android:title="Windsurfing"/>
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Settings"/>
+
     </group>
 
 </menu>
