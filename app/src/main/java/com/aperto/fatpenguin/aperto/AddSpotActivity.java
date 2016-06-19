@@ -3,14 +3,17 @@ package com.aperto.fatpenguin.aperto;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +49,7 @@ public class AddSpotActivity extends Activity {
     private ImageButton imgButton;
     private Uri imageFileUri;
     private RatingBar rating;
+    private CollapsingToolbarLayout topToolLayout;
 
     private String[] spotFields;
     private byte[] thumbnail;
@@ -61,6 +65,7 @@ public class AddSpotActivity extends Activity {
         editDescription = (EditText) findViewById(R.id.description_edit_txt);
         rating = (RatingBar) findViewById(R.id.detail_view_rating_bar);
         imgButton = (ImageButton) findViewById(R.id.add_image);
+        topToolLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_activity);
 
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.inner_category_wheel);
@@ -143,8 +148,11 @@ public class AddSpotActivity extends Activity {
             switch (resultCode){
                 case RESULT_OK:
                     try{
-                        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                        imgButton.setImageBitmap(bitmap);
+                        Bundle extras = data.getExtras();
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), imageBitmap);
+                        imgButton.setVisibility(View.GONE);
+                        topToolLayout.setBackground(bitmapDrawable);
                     }catch (Exception e){
                         System.out.print("something went wrooong");
                     }
