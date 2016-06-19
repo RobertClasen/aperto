@@ -38,6 +38,7 @@ public class AddSpotActivity extends Activity {
     private static final int TAKE_PICTURE = 1;
     private static final String TAG = "addSpot";
     private static final String SPOT_RESULT_CODE = "spot_data";
+    private static final String SPOT_THUMBNAIL_CODE = "spot_thumbnail";
     private static Spot spot;
 
     private EditText editTitle;
@@ -47,6 +48,7 @@ public class AddSpotActivity extends Activity {
     private RatingBar rating;
 
     private String[] spotFields;
+    private byte[] thumbnail;
 
 
 
@@ -57,7 +59,7 @@ public class AddSpotActivity extends Activity {
 
         editTitle = (EditText) findViewById(R.id.title_edit_txt);
         editDescription = (EditText) findViewById(R.id.description_edit_txt);
-        rating = (RatingBar) findViewById(R.id.info_window_rating_bar);
+        rating = (RatingBar) findViewById(R.id.detail_view_rating_bar);
         imgButton = (ImageButton) findViewById(R.id.add_image);
 
 
@@ -92,6 +94,7 @@ public class AddSpotActivity extends Activity {
                 if (gotValidInput()) {
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(SPOT_RESULT_CODE, spotFields);
+                    resultIntent.putExtra(SPOT_THUMBNAIL_CODE, thumbnail);
                     setResult(RESULT_OK, resultIntent);
                     finish();
                 } else {

@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements
     private double ln;
     private Fragment selectorFragment;
     private boolean selectorIsVisible;
+    private static final String MARKER_DATA = "marker_data";
 
     private static final int REQUEST_NEW_SPOT = 0;
 
@@ -245,7 +246,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        double[] position = new double[] {marker.getPosition().latitude,
+                marker.getPosition().longitude};
+
         Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra(MARKER_DATA, position);
         startActivity(intent);
     }
 
@@ -325,24 +330,34 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Spot spot = new Spot();
+
         if (requestCode == REQUEST_NEW_SPOT && resultCode == RESULT_OK) {
             String[] spotData = data.getStringArrayExtra("spot_data");
+            byte[] thumbnail = data.getByteArrayExtra("spot_thumbnail");
 
-            Spot spot = new Spot();
             spot.setCategory(Integer.valueOf(spotData[0]));
             spot.setTitle(spotData[1]);
             spot.setDescription(spotData[2]);
             spot.setRating(Float.valueOf(spotData[3]));
             spot.setLatitude(lt);
             spot.setLongitude(ln);
-
+            spot.setThumbnail(thumbnail);
 
             realm.beginTransaction();
             final Spot managedSpot = realm.copyToRealm(spot);
             realm.commitTransaction();
         }
 
-//        placeMarkers(1);
+        int categoryId = getResources().obtainTypedArray(R.array.categories_markers)
+                .getResourceId(spot.getCategory(), -1);
+
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(spot.getLatitude(), spot.getLongitude()))
+                .icon(BitmapDescriptorFactory.fromResource(categoryId)));
+
     }
 
     public void placeMarkers(boolean[] chosenCategories) {
@@ -359,9 +374,7 @@ public class MainActivity extends AppCompatActivity implements
 
                     map.addMarker(new MarkerOptions()
                             .position(new LatLng(s.getLatitude(), s.getLongitude()))
-                            .icon(BitmapDescriptorFactory.fromResource(categoryId)))
-                            .setTitle(s.getTitle());
-
+                            .icon(BitmapDescriptorFactory.fromResource(categoryId)));
                 }
             }
         }

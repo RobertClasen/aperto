@@ -1,11 +1,10 @@
 package com.aperto.fatpenguin.aperto;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -14,27 +13,23 @@ import com.google.android.gms.maps.model.Marker;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
-//    private final View window;
     private final View contents;
-//    private RelativeLayout root;
+    private ImageView image;
     private TextView title;
     private RatingBar rating;
     private RealmConfiguration realmConfig;
     private Realm realm;
 
     public CustomInfoWindowAdapter(Context context) {
-        Resources resources = context.getResources();
         LayoutInflater lf = LayoutInflater.from(context);
-//        window = lf.inflate(R.layout.info_window_view,null);
         contents = lf.inflate(R.layout.info_contents_view,null);
-//        root = (RelativeLayout) contents.findViewById(R.id.info_window_root);
+        image = (ImageView) contents.findViewById(R.id.info_window_image);
         title = (TextView) contents.findViewById(R.id.info_window_title);
-        rating = (RatingBar) contents.findViewById(R.id.info_window_rating_bar);
+        rating = (RatingBar) contents.findViewById(R.id.detail_view_rating_bar);
 
         realmConfig = new RealmConfiguration
                 .Builder(context)
@@ -72,6 +67,7 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         Spot spot = spots.get(0);
 
+//        image.setBackground(spot.getThumbnail());
         title.setText(spot.getTitle());
         rating.setRating(spot.getRating());
 

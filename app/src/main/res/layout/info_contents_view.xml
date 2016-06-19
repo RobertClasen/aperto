@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/info_window_image"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:scaleType="centerCrop"
@@ -17,7 +17,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignBottom="@+id/image"
+        android:layout_alignBottom="@+id/info_window_image"
         android:background="@color/white_trans">
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_gravity="center" />
 
         <RatingBar
-            android:id="@+id/info_window_rating_bar"
+            android:id="@+id/detail_view_rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/info_window_title"

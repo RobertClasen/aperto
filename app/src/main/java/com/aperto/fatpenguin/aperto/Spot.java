@@ -1,8 +1,5 @@
 package com.aperto.fatpenguin.aperto;
 
-import android.graphics.Bitmap;
-import android.location.Location;
-
 import io.realm.RealmObject;
 
 public class Spot extends RealmObject {
@@ -10,26 +7,10 @@ public class Spot extends RealmObject {
     private String description;
     private int category;
     private float rating;
-//    private Bitmap photo;
+    private byte[] thumbnail;
     private double lt;
     private double ln;
 
-//    public Spot(MainActivity mainActivity, String title, String description, int category,
-//                float rating) {
-//        this.title = title;
-//        this.description = description;
-//        this.category = category;
-//        this.rating = rating;
-//
-//        Location currentLocation = mainActivity.getCurrentLocation();
-//
-//        this.lt = currentLocation.getLatitude();
-//        this.ln = currentLocation.getLongitude();
-//    }
-
-    public Spot() {
-
-    }
 
     public String getTitle() {
         return title;
@@ -79,11 +60,11 @@ public class Spot extends RealmObject {
         return ln;
     }
 
-//    public Bitmap getPhoto() {
-//        return photo;
-//    }
-//
-//    public void setPhoto(Bitmap photo) {
-//        this.photo = photo;
-//    }
+    public byte[] getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(byte[] thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 }

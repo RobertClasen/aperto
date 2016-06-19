@@ -26,7 +26,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/info_window_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:background="@color/white"
@@ -105,7 +105,7 @@
                 android:layout_below="@id/button_bar"/>
 
             <RatingBar
-                android:id="@+id/info_window_rating_bar"
+                android:id="@+id/detail_view_rating_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/first_separator"
@@ -120,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/medium_grey"
-                android:layout_below="@id/info_window_rating_bar"/>
+                android:layout_below="@id/detail_view_rating_bar"/>
 
             <TextView
                 android:id="@+id/place_detail"
@@ -130,19 +130,19 @@
                 android:padding="@dimen/md_keylines"
                 tools:text="@string/detail_desc_short"/>
 
-            <View
-                android:id="@+id/third_separator"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/medium_grey"
-                android:layout_below="@id/place_detail"/>
+            <!--<View-->
+                <!--android:id="@+id/third_separator"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0.5dp"-->
+                <!--android:background="@color/medium_grey"-->
+                <!--android:layout_below="@id/place_detail"/>-->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/gallery_view"
-                android:layout_below="@id/third_separator"
-                android:paddingTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/gallery_view"-->
+                <!--android:layout_below="@id/third_separator"-->
+                <!--android:paddingTop="10dp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"/>-->
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
