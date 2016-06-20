@@ -48,14 +48,13 @@ public class DetailActivity extends AppCompatActivity {
                 .Builder(this)
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        Realm.setDefaultConfiguration(realmConfig);
-        realm = Realm.getDefaultInstance();
+        realm = Realm.getInstance(realmConfig);
 
         position = getIntent().getDoubleArrayExtra("marker_data");
 
         RealmResults<Spot> spots = realm.where(Spot.class)
-                .equalTo("lt", position[0])
-                .equalTo("ln", position[1])
+                .equalTo("latitude", position[0])
+                .equalTo("longitude", position[1])
                 .findAll();
 
         spot = spots.get(0);
@@ -69,9 +68,12 @@ public class DetailActivity extends AppCompatActivity {
 
         image = (ImageView) findViewById(R.id.info_window_image);
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(spot.getThumbnail());
-//        image.setBackground(Drawable.createFromStream(inputStream, "image"));
-        image.setImageDrawable(Drawable.createFromStream(inputStream, "image"));
+        RealmResults<Photo> photos = realm.where(Photo.class)
+                .equalTo("id", spot.getPhotoId()).findAll();
+
+        Photo photo = photos.get(0);
+
+        image.setImageDrawable(photo.getPhoto());
 
         ratingBar = (RatingBar) findViewById(R.id.detail_view_rating_bar);
         ratingBar.setRating(spot.getRating());
@@ -110,24 +112,6 @@ public class DetailActivity extends AppCompatActivity {
 //
 //        galleryView.setLayoutManager(new GridLayoutManager(this, 2));
 
-
     }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//
-//        RealmResults<Spot> spotsToDelete = realm.where(Spot.class)
-//                .equalTo("lt", position[0])
-//                .equalTo("ln", position[1])
-//                .findAll();
-//
-////        Spot spotToDelete = spotsToDelete.get(0);
-//
-//        realm.beginTransaction();
-//        spot.setRating(ratingBar.getRating());
-//        spotsToDelete.deleteAllFromRealm();
-//        realm.copyToRealm(spot);
-//        realm.commitTransaction();
-//    }
 }

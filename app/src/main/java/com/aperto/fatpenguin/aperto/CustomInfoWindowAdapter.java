@@ -16,6 +16,7 @@ import java.io.ByteArrayInputStream;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
@@ -26,6 +27,7 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private RatingBar rating;
     private RealmConfiguration realmConfig;
     private Realm realm;
+    private RealmQuery<Spot> query;
 
     public CustomInfoWindowAdapter(Context context) {
         LayoutInflater lf = LayoutInflater.from(context);
@@ -38,8 +40,8 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                 .Builder(context)
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        Realm.setDefaultConfiguration(realmConfig);
-        realm = Realm.getDefaultInstance();
+        realm = Realm.getInstance(realmConfig);
+        query = realm.where(Spot.class);
     }
 
 
@@ -63,16 +65,25 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     @Override
     public View getInfoContents(Marker marker) {
         LatLng position = marker.getPosition();
+
         RealmResults<Spot> spots = realm.where(Spot.class)
-                .equalTo("lt", position.latitude)
-                .equalTo("ln", position.longitude)
+                .equalTo("latitude", position.latitude)
+                .equalTo("longitude", position.longitude)
                 .findAll();
 
         Spot spot = spots.get(0);
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(spot.getThumbnail());
+        RealmResults<Photo> photos = realm.where(Photo.class)
+                .equalTo("id", spot.getPhotoId()).findAll();
 
-        image.setImageDrawable(Drawable.createFromStream(inputStream, "image"));
+//        realm.beginTransaction();
+//        Photo photo = realm.createObject(Photo.class, spot.getPhotoId());
+//        realm.commitTransaction();
+
+//        ByteArrayInputStream inputStream = new ByteArrayInputStream(photo.getPhoto());
+
+//        image.setImageDrawable(Drawable.createFromStream(inputStream, "image"));
+        image.setImageDrawable(photos.get(0).getPhoto());
         title.setText(spot.getTitle());
         rating.setRating(spot.getRating());
 

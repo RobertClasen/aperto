@@ -57,8 +57,7 @@ public class FavoriteActivity extends AppCompatActivity{
                 .Builder(FavoriteActivity.this)
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        Realm.setDefaultConfiguration(realmConfig);
-        realm = Realm.getDefaultInstance();
+        realm = Realm.getInstance(realmConfig);
         RealmResults<Spot> spots = realm.where(Spot.class).equalTo("favorite", true).findAll();
         for (Spot s : spots){
             favoriteSpots.add(s);

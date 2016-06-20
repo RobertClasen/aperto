@@ -1,11 +1,5 @@
 package com.aperto.fatpenguin.aperto;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
-
 import io.realm.RealmObject;
 
 public class Spot extends RealmObject {
@@ -13,13 +7,11 @@ public class Spot extends RealmObject {
     private String description;
     private int category;
     private float rating;
-    private byte[] thumbnail;
-    private double lt;
-    private double ln;
+    private long photoId;
+    private double latitude;
+    private double longitude;
     private boolean favorite;
 
-    //test
-    //test
     public String getTitle() {
         return title;
     }
@@ -53,34 +45,30 @@ public class Spot extends RealmObject {
     }
 
     public double getLatitude() {
-        return lt;
+        return latitude;
     }
 
     public void setLatitude(double lt) {
-        this.lt = lt;
+        this.latitude = lt;
     }
 
     public void setLongitude(double ln) {
-        this.ln = ln;
+        this.longitude = ln;
     }
 
     public double getLongitude() {
-        return ln;
+        return longitude;
     }
 
-    public byte[] getThumbnail() {
-        return thumbnail;
+    public void setFavorite(boolean b){this.favorite = b;}
+
+    public boolean getFavorite(){return favorite;}
+
+    public void setPhotoId(long photoId) {
+        this.photoId = photoId;
     }
 
-    public void setThumbnail(byte[] thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public void setFavorite(boolean b) {
-        this.favorite = b;
-    }
-
-    public boolean getFavorite() {
-        return favorite;
+    public long getPhotoId() {
+        return photoId;
     }
 }

@@ -12,8 +12,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -38,6 +40,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -60,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements
     private static final String MARKER_DATA = "marker_data";
     private CameraPosition startPosition;
 
+    private static final String SPOT_DATA = "com.aperto.fatpenguin.aperto.spot_data";
+    private static final String PHOTO_PRIMARY_KEY = "com.aperto.fatpenguin.aperto.photo_primary_key";
     private static final int REQUEST_NEW_SPOT = 0;
 
     private Realm realm;
@@ -104,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements
 
                     int menuId = menuItem.getItemId();
 
+                    Spot spot = new Spot();
+
+
                     // TODO: handle navigation
                     // Closing drawer on item click
                     switch (menuId) {
@@ -146,20 +155,11 @@ public class MainActivity extends AppCompatActivity implements
 //                    @Override
 //                    public void execute(Realm realm) {
 //                        realm.delete(Spot.class);
+//                        realm.delete(Photo.class);
 //                    }
 //                });
 //            }
 //        });
-
-        // Set behavior of the test_fab_query
-//        FloatingActionButton testFabQuery = (FloatingActionButton) findViewById(R.id.test_fab_query);
-//        testFabQuery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                placeMarkers(1);
-//            }
-//        });
-
 
         // Get a reference to the MapFragment from resources.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Log.e("Main", "Connected to gsp");
+        Log.e("MainActivity", "Connected to GPS");
         map.setMyLocationEnabled(true);
 
         if (checkPermission("android.permission.ACCESS_FINE_LOCATION", 1, 0)
@@ -313,35 +313,35 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("Main", "OnActivityResult");
 
-        Spot spot = new Spot();
+//        Spot spot = new Spot();
 
         if (requestCode == REQUEST_NEW_SPOT && resultCode == RESULT_OK) {
-            String[] spotData = data.getStringArrayExtra("spot_data");
-            byte[] thumbnail = data.getByteArrayExtra("spot_thumbnail");
+            Log.e("MainActivity", "onActivityResult, creating a new spot");
 
+            final String[] spotData = data.getStringArrayExtra(SPOT_DATA);
+            final long photoId = data.getLongExtra(PHOTO_PRIMARY_KEY, -1);
+
+            Spot spot = new Spot();
             spot.setCategory(Integer.valueOf(spotData[0]));
             spot.setTitle(spotData[1]);
             spot.setDescription(spotData[2]);
             spot.setRating(Float.valueOf(spotData[3]));
             spot.setLatitude(latitude);
             spot.setLongitude(longitude);
-            spot.setThumbnail(thumbnail);
+            spot.setPhotoId(photoId);
 
             realm.beginTransaction();
-            final Spot managedSpot = realm.copyToRealm(spot);
+            realm.copyToRealm(spot);
             realm.commitTransaction();
+
+            int categoryId = getResources().obtainTypedArray(R.array.categories_markers)
+                    .getResourceId(spot.getCategory(), -1);
+
+            map.addMarker(new MarkerOptions()
+                    .position(new LatLng(spot.getLatitude(), spot.getLongitude()))
+                    .icon(BitmapDescriptorFactory.fromResource(categoryId)));
         }
-
-        int categoryId = getResources().obtainTypedArray(R.array.categories_markers)
-                .getResourceId(spot.getCategory(), -1);
-
-
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(spot.getLatitude(), spot.getLongitude()))
-                .icon(BitmapDescriptorFactory.fromResource(categoryId)));
-
     }
 
     public void placeMarkers(boolean[] chosenCategories) {

@@ -26,18 +26,18 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.graphics.Bitmap;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by rasmusliebst, kristianwolthers and pellerubin on 14/06/16. its a me mario
  */
-
 
 public class AddSpotActivity extends Activity {
 
@@ -45,8 +45,8 @@ public class AddSpotActivity extends Activity {
     private int categoryIndex;
     private Drawable currentCategory;
     private ColorFilter black = new LightingColorFilter(Color.BLACK, Color.BLACK);
-    private static final String SPOT_RESULT_CODE = "spot_data";
-    private static final String SPOT_THUMBNAIL_CODE = "spot_thumbnail";
+    private static final String SPOT_DATA = "com.aperto.fatpenguin.aperto.spot_data";
+    private static final String PHOTO_PRIMARY_KEY = "com.aperto.fatpenguin.aperto.photo_primary_key";
     private static final int REQUEST_TAKE_PHOTO = 1;
 
     private EditText editTitle;
@@ -59,14 +59,23 @@ public class AddSpotActivity extends Activity {
     private CollapsingToolbarLayout topToolLayout;
 
     private String[] spotFields;
-    private byte[] thumbnail;
+    private Bitmap photoBitmap;
+    private long nextId;
 
-
+    private Realm realm;
+    private RealmConfiguration realmConfig;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addspot);
+
+        Log.e("AddSpotActivity", "Setting up realm");
+        realmConfig = new RealmConfiguration
+                .Builder(AddSpotActivity.this)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(realmConfig);
 
         editTitle = (EditText) findViewById(R.id.title_edit_txt);
         editDescription = (EditText) findViewById(R.id.description_edit_txt);
@@ -110,16 +119,16 @@ public class AddSpotActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (gotValidInput()) {
-                    Log.e("addspot", "input good");
+                    Log.e("AddSpotActivity", "Input good");
                     Intent resultIntent = new Intent();
-                    resultIntent.putExtra(SPOT_RESULT_CODE, spotFields);
-                    resultIntent.putExtra(SPOT_THUMBNAIL_CODE, thumbnail);
+                    resultIntent.putExtra(SPOT_DATA, spotFields);
+                    resultIntent.putExtra(PHOTO_PRIMARY_KEY, nextId);
                     setResult(RESULT_OK, resultIntent);
                     finish();
                 } else {
-                    Log.e("addspot", "input bad");
+                    Log.e("AddSpotActivity", "Input bad");
                     setResult(RESULT_CANCELED);
-                    Snackbar snackbar = Snackbar.make(v, "Unable to submit", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(v, "Please complete the form", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
@@ -128,11 +137,15 @@ public class AddSpotActivity extends Activity {
         }
 
     private boolean gotValidInput() {
-        Log.e("addspot", "Checking input");
-        if (categoryPressed && editTitle != null && thumbnail != null) {
+        Log.e("AddSpotActivity", "Checking for valid input");
+        if (categoryPressed
+                && editTitle != null
+                && photoBitmap != null
+                && rating.getRating() != 0) {
             spotFields = new String[4];
             spotFields[0] = Integer.toString(categoryIndex);
             spotFields[1] = editTitle.getText().toString();
+            spotFields[3] = Float.toString(rating.getRating());
         } else {
             return false;
         }
@@ -140,38 +153,52 @@ public class AddSpotActivity extends Activity {
         if (editDescription.getText() != null) {
             spotFields[2] = editDescription.getText().toString();
         }
-        if (rating.getRating() != 0) {
-            spotFields[3] = Float.toString(rating.getRating());
-        }
 
         return true;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("addspot", "got photo back");
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+        Log.e("AddSpotActiivty", "Photo retrieved from camera");
             try {
-                FileInputStream is = new FileInputStream(photoFile);
+                final FileInputStream inputStream = new FileInputStream(photoFile);
 
-                BitmapFactory.Options options = new BitmapFactory.Options();
+                final BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 5;
                 options.inPreferQualityOverSpeed = true;
 
-                Bitmap photo = BitmapFactory.decodeStream(is, null, options);
-                BitmapDrawable photoDrawable = new BitmapDrawable(getResources(), photo);
+                photoBitmap = BitmapFactory.decodeStream(inputStream, null, options);
 
-                // Convert photo to a byte array for storage in realm.
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                thumbnail = stream.toByteArray();
+                // Generate a BitmapDrawable just for the ImageView in this activity.
+                BitmapDrawable photoDrawable = new BitmapDrawable(getResources(), photoBitmap);
 
                 topToolLayout.removeView(imgButton);
-
                 imageView.setImageDrawable(photoDrawable);
-//                topToolLayout.setBackground(photoDrawable);
+
+                Log.e("AddSpotActiivty", "Time to genereate an id for the photo");
+                // Generate the primary key for the photo.
+                if (realm.where(Photo.class).max("id") == null) {
+                    nextId = 0;
+                    Log.e("AddSpotActiivty", "First photo to go in realm, id is set to " + nextId);
+                } else {
+                    Log.e("AddSpotActiivty", "Not first photo to go in realm...");
+                    nextId = (long) realm.where(Photo.class).max("id").longValue() + 1;
+                    Log.e("AddSpotActiivty", "...id is set to " + nextId);
+                }
+
+                Photo photo= new Photo();
+                photo.setId(nextId);
+                photo.setPhoto(photoBitmap);
+
+                Log.e("AddSpotActivity", "Getting ready to commit photo to realm");
+                realm.beginTransaction();
+                realm.copyToRealm(photo);
+                Log.e("AddSpotActivity", "Photo got id: " + nextId);
+                realm.commitTransaction();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -215,6 +242,13 @@ public class AddSpotActivity extends Activity {
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("AddSpotActivity", "Closing realm");
+        realm.close();
     }
 
 }
