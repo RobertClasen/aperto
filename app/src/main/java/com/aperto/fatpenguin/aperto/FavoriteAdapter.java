@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 //test
+//test
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
     private ArrayList<Spot> spotsData;
     public static class ViewHolder extends RecyclerView.ViewHolder {
