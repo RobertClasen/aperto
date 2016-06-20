@@ -1,10 +1,12 @@
 package com.aperto.fatpenguin.aperto;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +23,9 @@ import java.util.List;
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private List<Spot> spotsData;
     private ColorFilter redColorFilter;
-    private ColorFilter blackColorFilter;
+    private final View.OnClickListener onClickListener = new RecyclerItemClickListener();
 
-    public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
+    public static class FavoriteViewHolder extends RecyclerView.ViewHolder{
         public TextView textView;
         public ImageButton imgButton;
         public FavoriteViewHolder(View view){
@@ -36,10 +38,19 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     public FavoriteAdapter(List<Spot> favoriteSpots) {spotsData = favoriteSpots;}
 
     @Override
-    public FavoriteAdapter.FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FavoriteAdapter.FavoriteViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorite_list_row, parent, false);
-        //ViewHolder viewHolder = new ViewHolder(v);
-        return new FavoriteViewHolder(v);
+        FavoriteViewHolder favViewHolder = new FavoriteViewHolder(v);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.v("ehhh",     "Det var så her vi gerne ville" + "\n"
+                                + "åbne for detailActivity, men" + "\n"
+                                + "Det viste sig at det var svæ-" + "\n"
+                                + "rere end forventet" + "\n");
+            }
+        });
+        return favViewHolder;
     }
 
 

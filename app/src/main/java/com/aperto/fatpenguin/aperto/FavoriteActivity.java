@@ -50,17 +50,6 @@ public class FavoriteActivity extends AppCompatActivity{
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Spot s = favoriteSpots.get(position);
-                        double[] positionsssss = new double[] {s.getLatitude(), s.getLongitude()};
-                        Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
-                        intent.putExtra(MARKER_DATA, position);
-
-                    }
-                }));
 
         // specify an adapter
 
