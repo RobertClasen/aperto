@@ -32,7 +32,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,10 +44,12 @@
         //addspot
         <activity android:name=".AddSpotActivity"
             android:label="Add new Spot"
+            android:screenOrientation="portrait"
             />
 
         <activity android:name=".FavoriteActivity"
-            android:label="See favorites"/>
+            android:label="See favorites"
+            android:screenOrientation="portrait"/>
 
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
@@ -56,7 +59,8 @@
 
         <activity
             android:name=".DetailActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 
