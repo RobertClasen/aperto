@@ -21,7 +21,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -50,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements
     private DrawerLayout drawerLayout;
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
-    private double lt;
-    private double ln;
+    private double latitude;
+    private double longitude;
     private Fragment selectorFragment;
     private boolean selectorIsVisible;
     private static final String MARKER_DATA = "marker_data";
@@ -127,29 +126,19 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         // Set behavior of the test fab
-        FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
-        testFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Spot spot = new Spot();
-//                spot.setCategory(3);
-//                spot.setTitle("Havdrup Nyskov");
-//                spot.setDescription("Lille men hyggelig skov til en hurtig løbetur.");
-//                spot.setRating(6.0f);
-
-//                 Delete all spots
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        realm.delete(Spot.class);
-                    }
-                });
-
-//                realm.beginTransaction();
-//                final Spot managedSpot = realm.copyToRealm(spot);
-//                realm.commitTransaction();
-            }
-        });
+//        FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
+//        testFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Delete all spots
+//                realm.executeTransaction(new Realm.Transaction() {
+//                    @Override
+//                    public void execute(Realm realm) {
+//                        realm.delete(Spot.class);
+//                    }
+//                });
+//            }
+//        });
 
         // Set behavior of the test_fab_query
 //        FloatingActionButton testFabQuery = (FloatingActionButton) findViewById(R.id.test_fab_query);
@@ -270,12 +259,12 @@ public class MainActivity extends AppCompatActivity implements
                 == PackageManager.PERMISSION_GRANTED) {
             Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if (lastLocation != null) {
-                lt = lastLocation.getLatitude();
-                ln = lastLocation.getLongitude();
+                latitude = lastLocation.getLatitude();
+                longitude = lastLocation.getLongitude();
             }
         }
 
-        LatLng currentLocation = new LatLng(lt, ln);
+        LatLng currentLocation = new LatLng(latitude, longitude);
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(currentLocation)
@@ -292,22 +281,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) { }
 
-//    private void showStatus(String txt) {
-//        TextView tv = new TextView(this);
-//        tv.setText(txt);
-//        drawerLayout.addView(tv);
-//    }
-
-//    public Location getCurrentLocation() {
-//        Location currentLocation = null;
-//        if (checkPermission("android.permission.ACCESS_FINE_LOCATION", 1, 0)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-//        }
-//
-//        return currentLocation;
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -321,8 +294,8 @@ public class MainActivity extends AppCompatActivity implements
             spot.setTitle(spotData[1]);
             spot.setDescription(spotData[2]);
             spot.setRating(Float.valueOf(spotData[3]));
-            spot.setLatitude(lt);
-            spot.setLongitude(ln);
+            spot.setLatitude(latitude);
+            spot.setLongitude(longitude);
             spot.setThumbnail(thumbnail);
 
             realm.beginTransaction();
@@ -358,8 +331,6 @@ public class MainActivity extends AppCompatActivity implements
                 }
             }
         }
-
     }
 
 }
-
