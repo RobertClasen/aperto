@@ -11,41 +11,35 @@ import android.widget.TextView;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 //test
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
-    private ArrayList<Spot> spotsData;
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
+    private List<Spot> spotsData;
+    public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
-        public TextView dummy;
-        public ViewHolder(View view){
+        public FavoriteViewHolder(View view){
             super(view);
             textView = (TextView) view.findViewById(R.id.favorite_title);
-            dummy = (TextView) view.findViewById(R.id.dummy);
-            //imageView = (ImageView) view.findViewById(R.id.favorite_image);
         }
-
     }
 
-    public FavoriteAdapter(ArrayList<Spot> favoriteSpots) {
-        spotsData = favoriteSpots;
+    public FavoriteAdapter(List<Spot> favoriteSpots) {spotsData = favoriteSpots;
     }
 
     @Override
-    public FavoriteAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorite_list_row, parent, false);
-        ViewHolder viewHolder = new ViewHolder(v);
-        return viewHolder;
+        //ViewHolder viewHolder = new ViewHolder(v);
+        return new FavoriteViewHolder(v);
     }
 
+
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(FavoriteViewHolder holder, int position) {
         holder.textView.setText(spotsData.get(position).getTitle());
-        holder.dummy.setText(spotsData.get(position).getTitle());
     }
 
     @Override
-    public int getItemCount() {
-        return spotsData.size();
-    }
+    public int getItemCount() {return spotsData.size();}
 }
