@@ -1,10 +1,11 @@
 
 package com.aperto.fatpenguin.aperto;
 
-import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,11 +33,16 @@ public class DetailActivity extends AppCompatActivity {
     private Realm realm;
     private Spot spot;
     double[] position;
+    private ColorFilter redColorFilter;
+    private ColorFilter blackColorFilter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        redColorFilter = new LightingColorFilter(Color.WHITE, getResources().getColor(R.color.favoriteColor));
+        blackColorFilter = new LightingColorFilter(Color.WHITE, Color.BLACK);
 
         realmConfig = new RealmConfiguration
                 .Builder(this)
@@ -74,13 +80,28 @@ public class DetailActivity extends AppCompatActivity {
         description.setText(spot.getDescription());
 
         final ImageButton favoriteBtn = (ImageButton) findViewById(R.id.favorite_button);
+        if (spot.getFavorite()){
+            favoriteBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
+            favoriteBtn.setColorFilter(redColorFilter);
+        }else{
+            favoriteBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            favoriteBtn.setColorFilter(blackColorFilter);
+
+        }
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Boolean isFavorite = spot.getFavorite();
+                if (isFavorite){
+                    favoriteBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    favoriteBtn.setColorFilter(blackColorFilter);
+                }else{
+                    favoriteBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    favoriteBtn.setColorFilter(redColorFilter);
+                }
                 realm.beginTransaction();
-                spot.setFavorite(true);
+                spot.setFavorite(!isFavorite);
                 realm.commitTransaction();
-                favoriteBtn.setBackgroundResource(R.drawable.football);
             }
         });
 

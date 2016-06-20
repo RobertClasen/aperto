@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -18,9 +19,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -42,6 +45,7 @@ import io.realm.RealmResults;
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleMap.OnInfoWindowClickListener,
+        GoogleMap.OnMarkerClickListener,
         GoogleMap.InfoWindowAdapter,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements
     private Fragment selectorFragment;
     private boolean selectorIsVisible;
     private static final String MARKER_DATA = "marker_data";
+    private CameraPosition startPosition;
 
     private static final int REQUEST_NEW_SPOT = 0;
 
@@ -90,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         // Set behavior of Navigation drawer
+        assert navigationView != null; //TODO: Is this one needed??
         navigationView.setNavigationItemSelectedListener(
             new NavigationView.OnNavigationItemSelectedListener() {
                 // This method will trigger on item Click of navigation menu
@@ -104,13 +110,12 @@ public class MainActivity extends AppCompatActivity implements
                         case R.id.drawer_favorite:
                             Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
                             MainActivity.this.startActivity(intent);
-                            break;
+                            return true;
                         case R.id.drawer_settings:
-                            break;
+                            return true;
                     }
-
                     drawerLayout.closeDrawers();
-                    return true;
+                    return false;
                 }
             }
         );
@@ -213,6 +218,22 @@ public class MainActivity extends AppCompatActivity implements
         // info window.
         map.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
         map.setOnInfoWindowClickListener(this);
+        map.setOnMarkerClickListener(this);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(marker.getPosition().latitude+0.004, marker.getPosition().longitude))
+                .zoom(15.0f)
+                .tilt(30)
+                .build();
+
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        marker.showInfoWindow();
+
+        return true;
     }
 
     @Override
@@ -268,13 +289,15 @@ public class MainActivity extends AppCompatActivity implements
 
         LatLng currentLocation = new LatLng(latitude, longitude);
 
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(currentLocation)
-                .zoom(15.0f)
-                .tilt(30)
-                .build();
+        if (startPosition == null) {
+            startPosition = new CameraPosition.Builder()
+                    .target(currentLocation)
+                    .zoom(15.0f)
+                    .tilt(30)
+                    .build();
 
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(startPosition));
+        }
     }
 
     @Override
