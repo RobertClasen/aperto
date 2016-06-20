@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -109,12 +110,14 @@ public class AddSpotActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (gotValidInput()) {
+                    Log.e("addspot", "input good");
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(SPOT_RESULT_CODE, spotFields);
                     resultIntent.putExtra(SPOT_THUMBNAIL_CODE, thumbnail);
                     setResult(RESULT_OK, resultIntent);
                     finish();
                 } else {
+                    Log.e("addspot", "input bad");
                     setResult(RESULT_CANCELED);
                     Snackbar snackbar = Snackbar.make(v, "Unable to submit", Snackbar.LENGTH_LONG);
                     snackbar.show();
@@ -122,9 +125,10 @@ public class AddSpotActivity extends Activity {
             }
         });
 
-    }
+        }
 
     private boolean gotValidInput() {
+        Log.e("addspot", "Checking input");
         if (categoryPressed && editTitle != null && thumbnail != null) {
             spotFields = new String[4];
             spotFields[0] = Integer.toString(categoryIndex);
@@ -145,6 +149,7 @@ public class AddSpotActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("addspot", "got photo back");
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
