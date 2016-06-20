@@ -43,7 +43,7 @@ public class AddSpotActivity extends Activity {
     private boolean categoryPressed = false;
     private int categoryIndex;
     private Drawable currentCategory;
-    ColorFilter black = new LightingColorFilter(Color.BLACK, Color.BLACK);
+    private ColorFilter black = new LightingColorFilter(Color.BLACK, Color.BLACK);
     private static final String SPOT_RESULT_CODE = "spot_data";
     private static final String SPOT_THUMBNAIL_CODE = "spot_thumbnail";
     private static final int REQUEST_TAKE_PHOTO = 1;

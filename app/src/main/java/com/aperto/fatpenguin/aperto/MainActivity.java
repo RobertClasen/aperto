@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements
     private DrawerLayout drawerLayout;
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
-    private double lt;
-    private double ln;
+    private double latitude;
+    private double longitude;
     private Fragment selectorFragment;
     private boolean selectorIsVisible;
     private static final String MARKER_DATA = "marker_data";
@@ -279,12 +279,12 @@ public class MainActivity extends AppCompatActivity implements
                 == PackageManager.PERMISSION_GRANTED) {
             Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if (lastLocation != null) {
-                lt = lastLocation.getLatitude();
-                ln = lastLocation.getLongitude();
+                latitude = lastLocation.getLatitude();
+                longitude = lastLocation.getLongitude();
             }
         }
 
-        LatLng currentLocation = new LatLng(lt, ln);
+        LatLng currentLocation = new LatLng(latitude, longitude);
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(currentLocation)
@@ -314,8 +314,8 @@ public class MainActivity extends AppCompatActivity implements
             spot.setTitle(spotData[1]);
             spot.setDescription(spotData[2]);
             spot.setRating(Float.valueOf(spotData[3]));
-            spot.setLatitude(lt);
-            spot.setLongitude(ln);
+            spot.setLatitude(latitude);
+            spot.setLongitude(longitude);
             spot.setThumbnail(thumbnail);
 
             realm.beginTransaction();
