@@ -33,8 +33,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         }
     }
 
-    public FavoriteAdapter(List<Spot> favoriteSpots) {spotsData = favoriteSpots;
-    }
+    public FavoriteAdapter(List<Spot> favoriteSpots) {spotsData = favoriteSpots;}
 
     @Override
     public FavoriteAdapter.FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

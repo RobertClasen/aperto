@@ -1,5 +1,6 @@
 package com.aperto.fatpenguin.aperto;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -26,8 +27,8 @@ import io.realm.RealmResults;
 public class FavoriteActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private FavoriteAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
     List<Spot> favoriteSpots = new ArrayList<>();
+    private static final String MARKER_DATA = "marker_data";
 
     private Realm realm;
     private RealmConfiguration realmConfig;
@@ -43,12 +44,25 @@ public class FavoriteActivity extends AppCompatActivity{
         //recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        layoutManager= new LinearLayoutManager(getApplicationContext());
+        adapter = new FavoriteAdapter(favoriteSpots);
+
+
+        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Spot s = favoriteSpots.get(position);
+                        double[] positionsssss = new double[] {s.getLatitude(), s.getLongitude()};
+                        Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
+                        intent.putExtra(MARKER_DATA, position);
+
+                    }
+                }));
 
         // specify an adapter
-        adapter = new FavoriteAdapter(favoriteSpots);
-        recyclerView.setAdapter(adapter);
 
         realmConfig = new RealmConfiguration
                 .Builder(FavoriteActivity.this)

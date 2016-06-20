@@ -1,5 +1,11 @@
 package com.aperto.fatpenguin.aperto;
 
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
+
 import io.realm.RealmObject;
 
 public class Spot extends RealmObject {
@@ -70,8 +76,11 @@ public class Spot extends RealmObject {
         this.thumbnail = thumbnail;
     }
 
-    public void setFavorite(boolean b){this.favorite = b;}
+    public void setFavorite(boolean b) {
+        this.favorite = b;
+    }
 
-    public boolean getFavorite(){return favorite;}
-
+    public boolean getFavorite() {
+        return favorite;
+    }
 }

@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements
 
                     // TODO: handle navigation
                     // Closing drawer on item click
-                    switch (menuItem.getItemId()) {
+                    switch (menuId) {
                         case R.id.drawer_favorite:
                             Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
                             MainActivity.this.startActivity(intent);
