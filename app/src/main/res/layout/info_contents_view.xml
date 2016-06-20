@@ -3,17 +3,19 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/info_window_root"
-    android:layout_width="230dp"
-    android:layout_height="230dp">
+    android:layout_width="235dp"
+    android:layout_height="235dp">
 
     <ImageView
         android:id="@+id/info_window_image"
-        android:layout_width="230dp"
-        android:layout_height="230dp"
+        android:layout_width="235dp"
+        android:layout_height="235dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:scaleType="centerCrop"/>
 
     <LinearLayout
-        android:layout_width="230dp"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignBottom="@+id/info_window_image"

@@ -115,9 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/first_separator"
                 android:layout_centerHorizontal="true"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
-
+                android:stepSize="1.0"
                 android:numStars="5"/>
 
             <!--line-->
@@ -137,7 +135,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/second_separator"
                 android:padding="@dimen/md_keylines"
-                tools:text="@string/detail_desc_short"
                 android:background="@null"/>
 
             <!--line-->
