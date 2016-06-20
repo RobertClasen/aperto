@@ -45,6 +45,7 @@ import io.realm.RealmResults;
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleMap.OnInfoWindowClickListener,
+        GoogleMap.OnMarkerClickListener,
         GoogleMap.InfoWindowAdapter,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements
     private Fragment selectorFragment;
     private boolean selectorIsVisible;
     private static final String MARKER_DATA = "marker_data";
+    private CameraPosition startPosition;
 
     private static final int REQUEST_NEW_SPOT = 0;
 
@@ -215,6 +217,22 @@ public class MainActivity extends AppCompatActivity implements
         // info window.
         map.setInfoWindowAdapter(new CustomInfoWindowAdapter(this));
         map.setOnInfoWindowClickListener(this);
+        map.setOnMarkerClickListener(this);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(marker.getPosition().latitude+0.004, marker.getPosition().longitude))
+                .zoom(15.0f)
+                .tilt(30)
+                .build();
+
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        marker.showInfoWindow();
+
+        return true;
     }
 
     @Override
@@ -270,13 +288,15 @@ public class MainActivity extends AppCompatActivity implements
 
         LatLng currentLocation = new LatLng(latitude, longitude);
 
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(currentLocation)
-                .zoom(15.0f)
-                .tilt(30)
-                .build();
+        if (startPosition == null) {
+            startPosition = new CameraPosition.Builder()
+                    .target(currentLocation)
+                    .zoom(15.0f)
+                    .tilt(30)
+                    .build();
 
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(startPosition));
+        }
     }
 
     @Override
