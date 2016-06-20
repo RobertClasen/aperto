@@ -111,6 +111,10 @@ public class MainActivity extends AppCompatActivity implements
                             Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
                             MainActivity.this.startActivity(intent);
                             return true;
+                        case R.id.drawer_about:
+                            Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
+                            MainActivity.this.startActivity(aboutIntent);
+                            return true;
                         case R.id.drawer_settings:
                             return true;
                     }
