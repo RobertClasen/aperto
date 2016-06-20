@@ -1,26 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+   >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="@string/developers_title"
+        android:id="@+id/developers_title"
+        android:background="@color/colorPrimary_trans"
+        android:padding="@dimen/md_keylines"/>
 
     <TextView
         android:id="@+id/developers"
-        android:layout_weight="1"
         android:layout_margin="8dp"
         android:textSize="16dp"
-        android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="@dimen/md_keylines"/>
 
     <TextView
-        android:id="@+id/icon_credits"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="@string/credits_title"
+        android:id="@+id/credits_title"
+        android:background="@color/colorPrimary_trans"
+        android:padding="@dimen/md_keylines"/>
+
+
+    <TextView
+        android:id="@+id/icon8_title"
+        android:text="@string/icon8_title"
         android:layout_margin="8dp"
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="@dimen/md_keylines"/>
+
+    <TextView
+        android:id="@+id/icon8_link"
+        android:layout_toRightOf="@id/icon8_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/icon8_link"
+        android:padding="@dimen/md_keylines"
+        android:autoLink="web"/>
+
+    <TextView
+        android:id="@+id/google_title"
+        android:text="@string/google_title"
+        android:layout_margin="8dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/md_keylines"/>
+
+    <TextView
+        android:id="@+id/google_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/google_link"
+        android:padding="@dimen/md_keylines"
+        android:autoLink="web"/>
 
 </LinearLayout>

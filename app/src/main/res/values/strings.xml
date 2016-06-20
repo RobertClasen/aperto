@@ -13,8 +13,12 @@
     <string name="add_new_spot_title_prompt">E.g. Fælledparken</string>
     <string name="add_new_spot_submit_btn">Add spot</string>
     <string name="filter_button">Filter</string>
-
-
+    <string name="icon8_title">Icons8</string>
+    <string name="google_title">Google Material icons</string>
+    <string name="icon8_link">https://icons8.com/</string>
+    <string name="google_link">https://design.google.com/icons/</string>
+    <string name="developers_title">Developers</string>
+    <string name="credits_title">Credits</string>
     <string name="detail_desc_short">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
     eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 </resources>

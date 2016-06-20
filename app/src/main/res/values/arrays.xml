@@ -50,6 +50,13 @@
         <item>@drawable/marker_orange_logo</item>
     </array>
 
+    <string-array name="developers">
+        <item>Robert M. Clasen s143321</item>
+        <item>Pelle R. Galløe - s153742 </item>
+        <item>Marco Illemann - s153466 </item>
+        <item>Rasmus Liebst - s144483 </item>
+        <item>Kristian W. Rasmussen - s154121</item>
+    </string-array>
 
 
 
