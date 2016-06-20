@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements
     private Realm realm;
     private RealmConfiguration realmConfig;
 
+    //test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -12,6 +12,7 @@ public class Spot extends RealmObject {
     private double ln;
     private boolean favorite;
 
+    //test
 
     public String getTitle() {
         return title;
