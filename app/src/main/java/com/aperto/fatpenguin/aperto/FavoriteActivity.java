@@ -2,6 +2,7 @@ package com.aperto.fatpenguin.aperto;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -17,7 +18,7 @@ import io.realm.RealmResults;
 
 //test
 //test
-public class FavoriteActivity extends Activity{
+public class FavoriteActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
