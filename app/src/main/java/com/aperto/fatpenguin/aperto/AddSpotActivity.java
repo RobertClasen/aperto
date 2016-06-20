@@ -116,7 +116,7 @@ public class AddSpotActivity extends Activity {
                     finish();
                 } else {
                     setResult(RESULT_CANCELED);
-                    Snackbar snackbar = Snackbar.make(v, "not able to submit", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(v, "Unable to submit", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
@@ -125,7 +125,7 @@ public class AddSpotActivity extends Activity {
     }
 
     private boolean gotValidInput() {
-        if (categoryPressed && editTitle != null) {
+        if (categoryPressed && editTitle != null && thumbnail != null) {
             spotFields = new String[4];
             spotFields[0] = Integer.toString(categoryIndex);
             spotFields[1] = editTitle.getText().toString();
@@ -152,7 +152,7 @@ public class AddSpotActivity extends Activity {
                 FileInputStream is = new FileInputStream(photoFile);
 
                 BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 4;
+                options.inSampleSize = 5;
                 options.inPreferQualityOverSpeed = true;
 
                 Bitmap photo = BitmapFactory.decodeStream(is, null, options);

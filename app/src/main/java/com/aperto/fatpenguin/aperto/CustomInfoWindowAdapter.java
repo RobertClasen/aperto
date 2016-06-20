@@ -72,10 +72,9 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         ByteArrayInputStream inputStream = new ByteArrayInputStream(spot.getThumbnail());
 
-        image.setBackground(Drawable.createFromStream(inputStream, "image"));
+        image.setImageDrawable(Drawable.createFromStream(inputStream, "image"));
         title.setText(spot.getTitle());
         rating.setRating(spot.getRating());
-
 
         return contents;
 
