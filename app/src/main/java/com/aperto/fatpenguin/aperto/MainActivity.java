@@ -275,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        Log.e("Main", "Connected to gsp");
         map.setMyLocationEnabled(true);
 
         if (checkPermission("android.permission.ACCESS_FINE_LOCATION", 1, 0)
@@ -307,6 +308,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("Main", "OnActivityResult");
 
         Spot spot = new Spot();
 
