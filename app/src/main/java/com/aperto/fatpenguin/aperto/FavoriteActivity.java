@@ -1,6 +1,5 @@
 package com.aperto.fatpenguin.aperto;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 
@@ -8,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
