@@ -2,6 +2,9 @@ package com.aperto.fatpenguin.aperto;
 
 import io.realm.RealmObject;
 
+/**
+ * @Author Robert Clasen & Marco Illemann
+ */
 public class Spot extends RealmObject {
     private String title;
     private String description;

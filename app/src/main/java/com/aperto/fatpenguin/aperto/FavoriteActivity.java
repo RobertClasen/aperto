@@ -11,6 +11,9 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
+/**
+ * @Author Rasmus Liebst, Pelle Rubin & Kristian Wolthers
+ */
 public class FavoriteActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private FavoriteAdapter adapter;

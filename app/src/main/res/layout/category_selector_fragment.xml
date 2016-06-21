@@ -14,7 +14,7 @@
         android:background="?attr/colorPrimaryDark"
         android:scrollbars="none">
 
-        <!--Containter for filter buttons-->
+        <!--Container for filter buttons-->
         <LinearLayout
             android:id="@+id/inner_category_wheel"
             android:orientation="horizontal"

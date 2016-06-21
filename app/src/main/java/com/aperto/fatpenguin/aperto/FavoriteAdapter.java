@@ -14,6 +14,9 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+/**
+ * @Author Pelle Rubin & Kristian Wolthers
+ */
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private List<Spot> spotsData;
     private ColorFilter redColorFilter = new LightingColorFilter(Color.WHITE, Color.RED);

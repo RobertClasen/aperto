@@ -11,7 +11,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by robertclasen on 20/06/16.
+ * @Author Robert Clasen & Marco Illemann
  */
 public class Photo extends RealmObject {
     @PrimaryKey

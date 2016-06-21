@@ -46,6 +46,9 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
+/**
+ * @Author Robert Clasen & Marco Illemann
+ */
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleMap.OnInfoWindowClickListener,

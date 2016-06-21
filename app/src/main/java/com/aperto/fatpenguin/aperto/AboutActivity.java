@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**
+ * @Author Rasmus Liebst
+ */
 public class AboutActivity extends Activity {
 
     private TextView developers;

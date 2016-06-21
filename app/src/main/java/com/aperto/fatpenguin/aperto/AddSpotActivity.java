@@ -35,6 +35,9 @@ import java.util.Date;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+/**
+ * @Author Rasmus Liebst, Pelle Rubin & Kristian Wolthers
+ */
 public class AddSpotActivity extends Activity {
 
     private boolean categoryPressed = false;

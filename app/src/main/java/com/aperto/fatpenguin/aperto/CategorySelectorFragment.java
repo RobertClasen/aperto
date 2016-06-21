@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+/**
+ * @Author Robert Clasen & Marco Illemann
+ */
 public class CategorySelectorFragment extends Fragment {
     private ColorFilter white;
     private TypedArray categoryIcons;

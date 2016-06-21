@@ -21,10 +21,8 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 /**
- * @Author Robert Clasen
- * @Author Marco Illemann
+ * @Author Robert Clasen & Marco Illemann
  */
-
 public class DetailActivity extends AppCompatActivity {
     private ImageView image;
     private TextView title;
