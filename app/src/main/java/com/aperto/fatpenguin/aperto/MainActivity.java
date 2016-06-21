@@ -161,6 +161,32 @@ public class MainActivity extends AppCompatActivity implements
 //            }
 //        });
 
+        // Set behavior of the MyLocationFab.
+        FloatingActionButton myLocationFab = (FloatingActionButton) findViewById(R.id.my_location_fab);
+        myLocationFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkPermission("android.permission.ACCESS_FINE_LOCATION", 1, 0)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                    if (lastLocation != null) {
+                        latitude = lastLocation.getLatitude();
+                        longitude = lastLocation.getLongitude();
+                    }
+                }
+
+                LatLng currentLocation = new LatLng(latitude, longitude);
+
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(currentLocation)
+                        .zoom(15.0f)
+                        .tilt(30)
+                        .build();
+
+                map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+        });
+
         // Get a reference to the MapFragment from resources.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -215,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
-        map.setPadding(0, 110, 0, 0);
         map.getUiSettings().setCompassEnabled(false);
 
         // Setting an info window adapter allows us to change both the contents and look of the

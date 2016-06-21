@@ -7,6 +7,7 @@
     <color name="button_grey">#757575</color>
     <color name="white_trans">#99FFFFFF</color>
     <color name="colorPrimary_trans">#9954BF64</color>
+    <color name="blue">#2196F3</color>
 
     <color name="colorPrimaryLight">#79F281</color>
     <color name="favoriteColor">#CF000F</color>
