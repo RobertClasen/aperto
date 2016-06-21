@@ -23,20 +23,18 @@ import java.util.List;
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private List<Spot> spotsData;
     private ColorFilter redColorFilter;
-    private static final String MARKER_DATA = "marker_data";
+
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder{
         public TextView textView;
         public ImageButton imgButton;
-        public View view;
+
         public FavoriteViewHolder(View view){
             super(view);
-            this.view = view;
             textView = (TextView) view.findViewById(R.id.favorite_title);
             imgButton = (ImageButton) view.findViewById(R.id.favorite_button_recycle);
         }
 
-        public View getView(){return view;}
     }
 
     public FavoriteAdapter(List<Spot> favoriteSpots) {spotsData = favoriteSpots;}
@@ -55,16 +53,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         holder.textView.setText(s.getTitle());
         redColorFilter = new LightingColorFilter(Color.WHITE, Color.RED);
         holder.imgButton.setColorFilter(redColorFilter);
-        holder.getView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double[] position = new double[] {s.getLatitude(),
-                        s.getLongitude()};
-                Intent intent = new Intent(v.getContext(), DetailActivity.class);
-                intent.putExtra(MARKER_DATA, position);
-                v.getContext().startActivity(intent);
-            }
-        });
     }
 
     @Override
