@@ -1,34 +1,32 @@
 package com.aperto.fatpenguin.aperto;
 
 
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
-//test
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private List<Spot> spotsData;
-    private ColorFilter redColorFilter;
-
+    private ColorFilter redColorFilter = new LightingColorFilter(Color.WHITE, Color.RED);
+    private Realm realm;
+    private Context context;
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder{
         public TextView textView;
         public ImageButton imgButton;
-
         public FavoriteViewHolder(View view){
             super(view);
             textView = (TextView) view.findViewById(R.id.favorite_title);
@@ -37,7 +35,15 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     }
 
-    public FavoriteAdapter(List<Spot> favoriteSpots) {spotsData = favoriteSpots;}
+    public FavoriteAdapter(List<Spot> favoriteSpots, Context context) {
+        spotsData = favoriteSpots;
+        this.context = context;
+        RealmConfiguration realmConfig = new RealmConfiguration
+                .Builder(context)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(realmConfig);
+    }
 
     @Override
     public FavoriteAdapter.FavoriteViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
@@ -50,9 +56,26 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     @Override
     public void onBindViewHolder(FavoriteViewHolder holder, int position) {
         final Spot s = spotsData.get(position);
+        final ImageButton imgBut = holder.imgButton;
         holder.textView.setText(s.getTitle());
-        redColorFilter = new LightingColorFilter(Color.WHITE, Color.RED);
-        holder.imgButton.setColorFilter(redColorFilter);
+
+        imgBut.setColorFilter(redColorFilter);
+        imgBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean b = s.getFavorite();
+                if (b){
+                    imgBut.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    imgBut.setColorFilter(new LightingColorFilter(Color.BLACK, Color.BLACK));
+                }else{
+                    imgBut.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    imgBut.setColorFilter(redColorFilter);
+                }
+                realm.beginTransaction();
+                s.setFavorite(!b);
+                realm.commitTransaction();
+            }
+        });
     }
 
     @Override

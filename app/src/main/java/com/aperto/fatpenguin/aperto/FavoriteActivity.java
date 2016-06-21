@@ -44,7 +44,7 @@ public class FavoriteActivity extends AppCompatActivity{
         //recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        adapter = new FavoriteAdapter(favoriteSpots);
+        adapter = new FavoriteAdapter(favoriteSpots, this);
 
 
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getApplicationContext());
