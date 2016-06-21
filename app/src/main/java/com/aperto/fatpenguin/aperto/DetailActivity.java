@@ -25,22 +25,16 @@ import io.realm.RealmResults;
  */
 public class DetailActivity extends AppCompatActivity {
     private ImageView image;
-    private TextView title;
     private RatingBar ratingBar;
     private RealmConfiguration realmConfig;
     private Realm realm;
     private Spot spot;
     double[] position;
-    private ColorFilter redColorFilter;
-    private ColorFilter blackColorFilter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
-        redColorFilter = new LightingColorFilter(Color.WHITE, getResources().getColor(R.color.favoriteColor));
-        blackColorFilter = new LightingColorFilter(Color.WHITE, Color.BLACK);
 
         realmConfig = new RealmConfiguration
                 .Builder(this)
@@ -80,24 +74,20 @@ public class DetailActivity extends AppCompatActivity {
         description.setText(spot.getDescription());
 
         final ImageButton favoriteBtn = (ImageButton) findViewById(R.id.favorite_button);
-        if (spot.getFavorite()){
-            favoriteBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
-            favoriteBtn.setColorFilter(redColorFilter);
-        }else{
+        if (spot.getFavorite()) {
+            favoriteBtn.setImageResource(R.drawable.ic_favorite_filled_red_24dp);
+        } else {
             favoriteBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-            favoriteBtn.setColorFilter(blackColorFilter);
-
         }
+
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Boolean isFavorite = spot.getFavorite();
                 if (isFavorite){
                     favoriteBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                    favoriteBtn.setColorFilter(blackColorFilter);
-                }else{
-                    favoriteBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
-                    favoriteBtn.setColorFilter(redColorFilter);
+                } else {
+                    favoriteBtn.setImageResource(R.drawable.ic_favorite_filled_red_24dp);
                 }
                 realm.beginTransaction();
                 spot.setFavorite(!isFavorite);
@@ -106,19 +96,21 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         final ImageButton directionsBtn = (ImageButton) findViewById(R.id.directions_button);
-        directionsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("DetailActivity", "directionsBtn clicked");
-                String latitude = Double.toString(spot.getLatitude());
-                String longitude = Double.toString(spot.getLongitude());
+        if (directionsBtn != null) {
+            directionsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("DetailActivity", "directionsBtn clicked");
+                    String latitude = Double.toString(spot.getLatitude());
+                    String longitude = Double.toString(spot.getLongitude());
 
-                Uri geoUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude + "&mode=w");
+                    Uri geoUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude + "&mode=w");
 
-                Intent directionsIntent = new Intent(Intent.ACTION_VIEW, geoUri);
-                startActivity(directionsIntent);
-            }
-        });
+                    Intent directionsIntent = new Intent(Intent.ACTION_VIEW, geoUri);
+                    startActivity(directionsIntent);
+                }
+            });
+        }
 
     }
 }

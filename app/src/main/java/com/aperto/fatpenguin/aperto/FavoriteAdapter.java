@@ -19,7 +19,6 @@ import io.realm.RealmConfiguration;
  */
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private List<Spot> spotsData;
-    private ColorFilter redColorFilter = new LightingColorFilter(Color.WHITE, Color.RED);
     private Realm realm;
     private Context context;
 
@@ -31,7 +30,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             textView = (TextView) view.findViewById(R.id.favorite_title);
             imgButton = (ImageButton) view.findViewById(R.id.favorite_button_recycle);
         }
-
     }
 
     public FavoriteAdapter(List<Spot> favoriteSpots, Context context) {
@@ -58,17 +56,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         final ImageButton imgBut = holder.imgButton;
         holder.textView.setText(s.getTitle());
 
-        imgBut.setColorFilter(redColorFilter);
         imgBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean b = s.getFavorite();
-                if (b){
+                if (b) {
                     imgBut.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                    imgBut.setColorFilter(new LightingColorFilter(Color.BLACK, Color.BLACK));
-                }else{
-                    imgBut.setImageResource(R.drawable.ic_favorite_black_24dp);
-                    imgBut.setColorFilter(redColorFilter);
+                } else {
+                    imgBut.setImageResource(R.drawable.ic_favorite_filled_red_24dp);
                 }
                 realm.beginTransaction();
                 s.setFavorite(!b);

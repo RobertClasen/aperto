@@ -29,8 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
-            android:src="@drawable/ic_favorite_black_24dp"
-            android:tint="@color/button_grey" />
+            android:src="@drawable/ic_favorite_filled_red_24dp"/>
+
     </LinearLayout>
     <View
         android:id="@+id/first_separator"
