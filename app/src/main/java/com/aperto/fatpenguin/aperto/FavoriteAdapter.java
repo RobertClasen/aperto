@@ -1,6 +1,5 @@
 package com.aperto.fatpenguin.aperto;
 
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -11,10 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-
 import java.util.List;
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 

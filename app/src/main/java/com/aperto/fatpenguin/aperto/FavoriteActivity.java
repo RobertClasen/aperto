@@ -1,29 +1,16 @@
 package com.aperto.fatpenguin.aperto;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
-/**
- * Created by rasmusliebst on 19/06/16.
- */
-
-//test
-//test
 public class FavoriteActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private FavoriteAdapter adapter;
@@ -63,9 +50,6 @@ public class FavoriteActivity extends AppCompatActivity{
             favoriteSpots.add(s);
             Log.v("another favorite", s.getTitle());
         }
-
         adapter.notifyDataSetChanged();
-
     }
-
 }

@@ -29,6 +29,7 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private Realm realm;
     private RealmQuery<Spot> query;
 
+    //constructor
     public CustomInfoWindowAdapter(Context context) {
         LayoutInflater lf = LayoutInflater.from(context);
         contents = lf.inflate(R.layout.info_contents_view,null);
@@ -76,13 +77,6 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         RealmResults<Photo> photos = realm.where(Photo.class)
                 .equalTo("id", spot.getPhotoId()).findAll();
 
-//        realm.beginTransaction();
-//        Photo photo = realm.createObject(Photo.class, spot.getPhotoId());
-//        realm.commitTransaction();
-
-//        ByteArrayInputStream inputStream = new ByteArrayInputStream(photo.getPhoto());
-
-//        image.setImageDrawable(Drawable.createFromStream(inputStream, "image"));
         image.setImageDrawable(photos.get(0).getPhoto());
         title.setText(spot.getTitle());
         rating.setRating(spot.getRating());

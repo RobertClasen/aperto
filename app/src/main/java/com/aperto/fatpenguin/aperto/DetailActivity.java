@@ -4,7 +4,6 @@ package com.aperto.fatpenguin.aperto;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-import java.io.ByteArrayInputStream;
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -25,6 +21,7 @@ import io.realm.RealmResults;
  * @Author Robert Clasen
  * @Author Marco Illemann
  */
+
 public class DetailActivity extends AppCompatActivity {
     private ImageView image;
     private TextView title;
@@ -106,12 +103,5 @@ public class DetailActivity extends AppCompatActivity {
                 realm.commitTransaction();
             }
         });
-
-//        RecyclerView galleryView = (RecyclerView) findViewById(R.id.gallery_view);
-//        galleryView.setAdapter(new GalleryAdapter(this));
-//
-//        galleryView.setLayoutManager(new GridLayoutManager(this, 2));
-
     }
-
 }
