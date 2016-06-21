@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:text="@string/favorite_title"
+        android:text="@string/favourite_title"
         android:id="@+id/favorite_title"
         android:background="?attr/colorPrimary"
         android:padding="@dimen/md_keylines"

@@ -63,9 +63,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="0dp"
-            android:paddingBottom="@dimen/md_keylines"
-            android:paddingLeft="@dimen/md_keylines"
-            android:paddingRight="@dimen/md_keylines">
+            android:paddingBottom="@dimen/md_keylines">
 
             <LinearLayout
                 android:id="@+id/button_bar"
@@ -109,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/first_separator"
                 android:layout_centerHorizontal="true"
+                android:isIndicator="true"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
 

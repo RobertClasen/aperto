@@ -19,7 +19,7 @@
     <string name="google_link">https://design.google.com/icons/</string>
     <string name="developers_title">Developers</string>
     <string name="credits_title">Credits</string>
-    <string name="favorite_title">Favorites</string>
+    <string name="favourite_title">Favourites</string>
     <string name="detail_desc_short">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
     eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 </resources>
