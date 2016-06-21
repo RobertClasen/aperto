@@ -7,13 +7,27 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_favorite"
-    tools:context=".FavoriteActivity">
+    tools:context=".FavoriteActivity"
+    android:fitsSystemWindows="true"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="@string/favorite_title"
+        android:id="@+id/favorite_title"
+        android:background="?attr/colorPrimary"
+        android:padding="@dimen/md_keylines"
+        android:textColor="@color/white"
+        android:elevation="2dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/favorite_title"
         android:scrollbars="vertical"
         android:id="@+id/favorite_recyclerView">
-
     </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>

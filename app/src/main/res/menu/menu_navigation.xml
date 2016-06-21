@@ -7,7 +7,7 @@
         <item
             android:id="@+id/drawer_favorite"
             android:icon="@drawable/ic_favorite_border_black_24dp"
-            android:title="Favorite"/>
+            android:title="Favorites"/>
         <item
             android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings_black_24dp"
