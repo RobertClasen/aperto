@@ -1,13 +1,16 @@
 
 package com.aperto.fatpenguin.aperto;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -103,5 +106,21 @@ public class DetailActivity extends AppCompatActivity {
                 realm.commitTransaction();
             }
         });
+
+        final ImageButton directionsBtn = (ImageButton) findViewById(R.id.directions_button);
+        directionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("DetailActivity", "directionsBtn clicked");
+                String latitude = Double.toString(spot.getLatitude());
+                String longitude = Double.toString(spot.getLongitude());
+
+                Uri geoUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude + "&mode=w");
+
+                Intent directionsIntent = new Intent(Intent.ACTION_VIEW, geoUri);
+                startActivity(directionsIntent);
+            }
+        });
+
     }
 }

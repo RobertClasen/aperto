@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements
         // Adding Toolbar to Main screen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.aperto_fat_a_lys_rest);
+        toolbar.setLogo(R.drawable.aperto_lille);
 
         // Create Navigation drawer and inflate layout
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
