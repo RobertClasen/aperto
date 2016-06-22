@@ -1,9 +1,6 @@
 package com.aperto.fatpenguin.aperto;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +17,6 @@ import io.realm.RealmConfiguration;
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private List<Spot> spotsData;
     private Realm realm;
-    private Context context;
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder{
         public TextView textView;
@@ -34,7 +30,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     public FavoriteAdapter(List<Spot> favoriteSpots, Context context) {
         spotsData = favoriteSpots;
-        this.context = context;
         RealmConfiguration realmConfig = new RealmConfiguration
                 .Builder(context)
                 .deleteRealmIfMigrationNeeded()
@@ -45,10 +40,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     @Override
     public FavoriteAdapter.FavoriteViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorite_list_row, parent, false);
-        FavoriteViewHolder favViewHolder = new FavoriteViewHolder(v);
-        return favViewHolder;
+        return new FavoriteViewHolder(v);
     }
-
 
     @Override
     public void onBindViewHolder(FavoriteViewHolder holder, int position) {
@@ -73,6 +66,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     }
 
     @Override
-    public int getItemCount() {return spotsData.size();}
+    public int getItemCount() {
+        return spotsData.size();
+    }
 
 }

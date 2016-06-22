@@ -1,21 +1,15 @@
-
 package com.aperto.fatpenguin.aperto;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -25,7 +19,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -39,8 +32,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -102,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         // Set behavior of Navigation drawer
-        assert navigationView != null; //TODO: Is this one needed??
+        assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(
             new NavigationView.OnNavigationItemSelectedListener() {
                 // This method will trigger on item Click of navigation menu
@@ -111,10 +102,6 @@ public class MainActivity extends AppCompatActivity implements
 
                     int menuId = menuItem.getItemId();
 
-                    Spot spot = new Spot();
-
-
-                    // TODO: handle navigation
                     // Closing drawer on item click
                     switch (menuId) {
                         case R.id.drawer_favorite:
@@ -134,10 +121,9 @@ public class MainActivity extends AppCompatActivity implements
             }
         );
 
-
-
         // Set behavior of Floating Action Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,24 +132,9 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        // Set behavior of the test fab
-//        FloatingActionButton testFab = (FloatingActionButton) findViewById(R.id.test_fab);
-//        testFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Delete all spots
-//                realm.executeTransaction(new Realm.Transaction() {
-//                    @Override
-//                    public void execute(Realm realm) {
-//                        realm.delete(Spot.class);
-//                        realm.delete(Photo.class);
-//                    }
-//                });
-//            }
-//        });
-
         // Set behavior of the MyLocationFab.
         FloatingActionButton myLocationFab = (FloatingActionButton) findViewById(R.id.my_location_fab);
+        assert myLocationFab != null;
         myLocationFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements
                 ft.commit();
                 selectorIsVisible = true;
             }
-
         } else if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
         }
@@ -339,8 +309,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-//        Spot spot = new Spot();
 
         if (requestCode == REQUEST_NEW_SPOT && resultCode == RESULT_OK) {
             Log.e("MainActivity", "onActivityResult, creating a new spot");
